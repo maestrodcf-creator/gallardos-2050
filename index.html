@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Los Gallardos 2050 · Panel del Docente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #38BDF8;
+    --sky-dark: #0284C7;
+    --sun: #FBBF24;
+    --sun-dark: #D97706;
+    --grass: #4ADE80;
+    --grass-dark: #16A34A;
+    --coral: #FB7185;
+    --coral-dark: #E11D48;
+    --lavender: #A78BFA;
+    --lavender-dark: #7C3AED;
+    --sand: #FEF3C7;
+    --white: #FFFFFF;
+    --ink: #1E293B;
+    --ink-light: #475569;
+    --ink-muted: #94A3B8;
+    --surface: #F8FAFC;
+    --card: #FFFFFF;
+    --border: #E2E8F0;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --radius-pill: 999px;
+    --shadow: 0 4px 24px rgba(30,41,59,0.08);
+    --shadow-lg: 0 8px 40px rgba(30,41,59,0.14);
+    --font-display: 'Baloo 2', cursive;
+    --font-body: 'Nunito', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--surface);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO HEADER ── */
+  .hero {
+    background: linear-gradient(135deg, #0EA5E9 0%, #38BDF8 40%, #7DD3FC 70%, #BAE6FD 100%);
+    padding: 2.5rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60px;
+    background: var(--surface);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+  .hero-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    line-height: 1.1;
+  }
+  .hero-title span {
+    color: var(--sun);
+    display: block;
+  }
+  .hero-sub {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.85);
+    margin-top: 4px;
+    font-weight: 600;
+  }
+  .hero-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+  .level-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    border: 2px solid rgba(255,255,255,0.5);
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(4px);
+  }
+  .hero-city {
+    font-size: 4rem;
+    line-height: 1;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* ── NAV ── */
+  .nav-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem 0;
+  }
+  .nav {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .nav-btn {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 8px 18px;
+    border-radius: var(--radius-pill);
+    border: 2px solid var(--border);
+    background: var(--card);
+    color: var(--ink-light);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .nav-btn:hover { border-color: var(--sky); color: var(--sky-dark); background: #F0F9FF; }
+  .nav-btn.active {
+    background: var(--sky);
+    border-color: var(--sky);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(56,189,248,0.4);
+  }
+  .nav-icon { font-size: 1.1rem; }
+
+  /* ── MAIN ── */
+  .main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem 4rem;
+  }
+  .view { display: none; }
+  .view.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  /* ── GROUPS GRID ── */
+  .groups-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .group-card {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .group-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--card-accent, var(--sky));
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .group-card:hover { border-color: var(--sky); box-shadow: var(--shadow); transform: translateY(-2px); }
+  .group-card.selected { border-color: var(--lavender); box-shadow: 0 0 0 4px rgba(167,139,250,0.2); }
+
+  .group-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .group-emoji { font-size: 2.2rem; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: var(--surface); border-radius: 12px; }
+  .group-meta h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; line-height: 1.2; }
+  .group-meta p { font-size: 0.75rem; color: var(--ink-muted); margin-top: 2px; }
+
+  .level-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+  }
+  .lv-aprendiz { background: #EEF2FF; color: #4338CA; }
+  .lv-constructor { background: #EFF6FF; color: #1D4ED8; }
+  .lv-urbanista { background: #ECFDF5; color: #065F46; }
+  .lv-arquitecto { background: #FFFBEB; color: #92400E; }
+
+  .pts-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--ink-light); margin-bottom: 6px; }
+  .pts-val { font-weight: 800; font-size: 1.1rem; color: var(--ink); }
+
+  .progress-track { background: var(--surface); border-radius: 99px; height: 8px; overflow: hidden; }
+  .progress-fill { height: 8px; border-radius: 99px; background: linear-gradient(90deg, var(--sky), var(--lavender)); transition: width 0.6s cubic-bezier(.34,1.56,.64,1); }
+
+  .task-dots { display: flex; gap: 4px; margin-top: 10px; flex-wrap: wrap; }
+  .task-dot { flex: 1; min-width: 18px; height: 7px; border-radius: 99px; background: var(--border); transition: background 0.3s; }
+  .task-dot.done { background: var(--grass); }
+  .task-dot.partial { background: var(--sun); }
+
+  /* ── DETAIL PANEL ── */
+  .detail-panel {
+    margin-top: 1.25rem;
+    background: var(--card);
+    border: 2px solid var(--lavender);
+    border-radius: var(--radius);
+    overflow: hidden;
+    animation: slideDown 0.3s ease;
+    box-shadow: var(--shadow-lg);
+  }
+  @keyframes slideDown { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:none; } }
+
+  .detail-header {
+    background: linear-gradient(135deg, #7C3AED, #A78BFA);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .detail-emoji { font-size: 2.5rem; }
+  .detail-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: #fff; }
+  .detail-sub { font-size: 0.8rem; color: rgba(255,255,255,0.8); margin-top: 2px; }
+
+  .tabs { display: flex; border-bottom: 2px solid var(--border); padding: 0 1.5rem; }
+  .tab {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 12px 16px;
+    cursor: pointer;
+    color: var(--ink-muted);
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active { color: var(--lavender-dark); border-bottom-color: var(--lavender-dark); }
+
+  .tab-content { display: none; padding: 1.25rem 1.5rem; }
+  .tab-content.active { display: block; }
+
+  .task-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .task-row:last-child { border: none; }
+  .task-page-tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: var(--radius-pill);
+    background: var(--sand);
+    color: #92400E;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .task-body { flex: 1; }
+  .task-name-text { font-size: 0.9rem; font-weight: 700; color: var(--ink); }
+  .task-controls { display: flex; align-items: center; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+
+  .status-select {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--border);
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .status-select:focus { outline: none; border-color: var(--lavender); }
+
+  .stars-row { display: flex; gap: 2px; }
+  .star-btn {
+    font-size: 1.3rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--border);
+    transition: all 0.15s;
+    line-height: 1;
+    padding: 0 1px;
+  }
+  .star-btn.lit { color: var(--sun); }
+  .star-btn:hover { transform: scale(1.3); }
+
+  .status-chip {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 9px;
+    border-radius: var(--radius-pill);
+  }
+  .sc-done { background: #D1FAE5; color: #065F46; }
+  .sc-partial { background: #FEF3C7; color: #92400E; }
+  .sc-pending { background: #F1F5F9; color: #64748B; }
+
+  .comment-area {
+    width: 100%;
+    margin-top: 8px;
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    padding: 8px 10px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    resize: none;
+    transition: border-color 0.2s;
+  }
+  .comment-area:focus { outline: none; border-color: var(--lavender); }
+
+  .save-btn {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: var(--radius-pill);
+    border: 2px solid var(--lavender);
+    background: transparent;
+    color: var(--lavender-dark);
+    cursor: pointer;
+    margin-top: 6px;
+    transition: all 0.2s;
+  }
+  .save-btn:hover { background: var(--lavender); color: #fff; }
+
+  .ok-msg { display: none; font-size: 0.75rem; font-weight: 700; color: var(--grass-dark); margin-top: 4px; }
+
+  /* ── RANKING ── */
+  .ranking-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .ranking-row:last-child { border: none; }
+  .rank-pos { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; width: 38px; text-align: center; flex-shrink: 0; }
+  .rank-info { flex: 1; }
+  .rank-name { font-size: 0.95rem; font-weight: 700; }
+  .rank-meta { font-size: 0.75rem; color: var(--ink-muted); margin-top: 2px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .rank-bar-wrap { width: 120px; background: var(--surface); border-radius: 99px; height: 10px; flex-shrink: 0; }
+  .rank-bar { height: 10px; border-radius: 99px; background: linear-gradient(90deg, var(--lavender), var(--sky)); transition: width 0.7s cubic-bezier(.34,1.56,.64,1); }
+
+  /* ── METRICS ── */
+  .metrics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+  .metric-card {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    text-align: center;
+  }
+  .metric-val { font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: var(--ink); }
+  .metric-lbl { font-size: 0.72rem; font-weight: 700; color: var(--ink-muted); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .insight {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .insight-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .insight-blue { background: #EFF6FF; color: #1E40AF; }
+  .insight-green { background: #ECFDF5; color: #065F46; }
+  .insight-amber { background: #FFFBEB; color: #92400E; }
+
+  /* ── BADGES VIEW ── */
+  .badges-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+  .badge-card {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+  .badge-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .badge-icon { font-size: 3rem; margin-bottom: 10px; display: block; }
+  .badge-name { font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; }
+  .badge-desc { font-size: 0.78rem; color: var(--ink-muted); font-weight: 600; line-height: 1.5; }
+  .badge-pts { font-size: 0.75rem; font-weight: 800; margin-top: 8px; padding: 3px 10px; border-radius: var(--radius-pill); display: inline-block; }
+
+  .points-legend {
+    background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
+    border: 2px solid #FDE68A;
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  .points-legend h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 800; color: #92400E; margin-bottom: 10px; }
+  .points-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #FDE68A; font-size: 0.82rem; font-weight: 600; color: #78350F; }
+  .points-row:last-child { border: none; }
+  .pts-badge { background: #D97706; color: #fff; font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: var(--radius-pill); }
+
+  /* ── SECTION LABEL ── */
+  .section-label { font-size: 0.75rem; font-weight: 800; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; margin-top: 4px; }
+
+  /* ── CARD WRAPPER (ranking / resumen) ── */
+  .panel-card {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+  .panel-card-title { font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 8px; }
+
+  /* ── GENERAL NOTE ── */
+  .note-textarea {
+    width: 100%;
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    padding: 12px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    resize: none;
+    transition: border-color 0.2s;
+    line-height: 1.6;
+  }
+  .note-textarea:focus { outline: none; border-color: var(--lavender); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .hero { padding: 1.5rem 1rem 2rem; }
+    .main, .nav-wrap { padding-left: 1rem; padding-right: 1rem; }
+    .rank-bar-wrap { display: none; }
+    .hero-city { font-size: 2.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero" role="banner">
+  <div class="hero-inner">
+    <div>
+      <h1 class="hero-title">Los Gallardos <span>2050</span></h1>
+      <p class="hero-sub">Panel del docente · 4.º de Primaria</p>
+      <div class="hero-badges">
+        <span class="level-pill">🌱 Aprendiz</span>
+        <span class="level-pill">🔨 Constructor</span>
+        <span class="level-pill">🗺️ Urbanista</span>
+        <span class="level-pill">👑 Arquitecto</span>
+      </div>
+    </div>
+    <div class="hero-city" aria-hidden="true">🏙️</div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav-wrap" aria-label="Secciones principales">
+  <div class="nav">
+    <button class="nav-btn active" onclick="showView('grupos', this)" aria-current="page">
+      <span class="nav-icon">👥</span> Grupos
+    </button>
+    <button class="nav-btn" onclick="showView('ranking', this)">
+      <span class="nav-icon">🏆</span> Ranking
+    </button>
+    <button class="nav-btn" onclick="showView('resumen', this)">
+      <span class="nav-icon">📊</span> Resumen clase
+    </button>
+    <button class="nav-btn" onclick="showView('insignias', this)">
+      <span class="nav-icon">🎖️</span> Insignias
+    </button>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- GRUPOS -->
+  <div id="view-grupos" class="view active">
+    <p class="section-label">Selecciona un grupo para ver el detalle</p>
+    <div class="groups-grid" id="groups-grid"></div>
+    <div id="detail-panel"></div>
+  </div>
+
+  <!-- RANKING -->
+  <div id="view-ranking" class="view">
+    <div class="panel-card">
+      <div class="panel-card-title">🏆 Clasificación general</div>
+      <div id="ranking-list"></div>
+    </div>
+  </div>
+
+  <!-- RESUMEN -->
+  <div id="view-resumen" class="view">
+    <div class="panel-card">
+      <div class="panel-card-title">📊 Resumen de la clase</div>
+      <div class="metrics-grid" id="metrics-grid"></div>
+      <p class="section-label">Observaciones automáticas</p>
+      <div id="insights-list"></div>
+    </div>
+  </div>
+
+  <!-- INSIGNIAS -->
+  <div id="view-insignias" class="view">
+    <div class="panel-card">
+      <div class="panel-card-title">🎖️ Sistema de insignias y puntos</div>
+      <div class="badges-grid" id="badges-grid"></div>
+      <div class="points-legend" id="points-legend"></div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+const TASKS = [
+  {id:'t0', name:'Portada y nombre del equipo', page:'Portada'},
+  {id:'t1', name:'Plano de calles y ángulos', page:'Pág. 1'},
+  {id:'t2', name:'Mapa de profesiones y sectores', page:'Pág. 2'},
+  {id:'t3', name:'Red de energía sostenible', page:'Pág. 3'},
+  {id:'t4', name:'Agenda de la ciudad', page:'Pág. 4'},
+  {id:'t5', name:'Cartel publicitario', page:'Pág. 5'},
+  {id:'t6', name:'Exposición oral', page:'Final'},
+];
+
+const ACCENTS = ['#38BDF8','#4ADE80','#FB7185','#FBBF24','#A78BFA','#F97316','#34D399'];
+
+const GROUPS_INIT = [
+  {id:'g0', name:'Equipo Almería', emoji:'🏗️'},
+  {id:'g1', name:'Equipo Cabo de Gata', emoji:'🌊'},
+  {id:'g2', name:'Equipo Los Gallardos', emoji:'🌻'},
+  {id:'g3', name:'Equipo Sierra Cabrera', emoji:'🏔️'},
+  {id:'g4', name:'Equipo Bédar', emoji:'⚡'},
+  {id:'g5', name:'Equipo Turre', emoji:'🌱'},
+  {id:'g6', name:'Equipo Mojácar', emoji:'🦅'},
+];
+
+const LEVELS = [
+  {min:280, label:'Arquitecto', cls:'lv-arquitecto', icon:'👑'},
+  {min:160, label:'Urbanista', cls:'lv-urbanista', icon:'🗺️'},
+  {min:70,  label:'Constructor', cls:'lv-constructor', icon:'🔨'},
+  {min:0,   label:'Aprendiz', cls:'lv-aprendiz', icon:'🌱'},
+];
+
+function loadData() {
+  try { return JSON.parse(localStorage.getItem('lg2050_v2')) || initData(); }
+  catch(e) { return initData(); }
+}
+function initData() {
+  const data = GROUPS_INIT.map((g,i) => ({
+    ...g,
+    accent: ACCENTS[i],
+    generalNote: '',
+    tasks: TASKS.map(t => ({id:t.id, status:'pending', stars:0, comment:''}))
+  }));
+  saveData(data); return data;
+}
+function saveData(d) { localStorage.setItem('lg2050_v2', JSON.stringify(d)); }
+
+function getLevel(pts) { return LEVELS.find(l => pts >= l.min); }
+function getPoints(g) {
+  return g.tasks.reduce((s,t) => {
+    if (t.status==='done') return s + Math.max(1, t.stars||1) * 10;
+    if (t.status==='partial') return s + 5;
+    return s;
+  }, 0);
+}
+function countDone(g) { return g.tasks.filter(t => t.status==='done').length; }
+function countPartial(g) { return g.tasks.filter(t => t.status==='partial').length; }
+
+/* ── RENDER GROUPS ── */
+function renderGroups() {
+  const groups = loadData();
+  document.getElementById('groups-grid').innerHTML = groups.map((g,i) => {
+    const pts = getPoints(g);
+    const lv  = getLevel(pts);
+    const done = countDone(g);
+    const pct  = Math.round((done / TASKS.length) * 100);
+    return `
+    <article class="group-card" id="card-${g.id}" onclick="openGroup('${g.id}')"
+      style="--card-accent:${g.accent}" tabindex="0"
+      onkeydown="if(event.key==='Enter')openGroup('${g.id}')"
+      aria-label="Ver detalles de ${g.name}">
+      <div class="group-top">
+        <div class="group-emoji">${g.emoji}</div>
+        <div class="group-meta">
+          <h3>${g.name}</h3>
+          <p><span class="level-badge ${lv.cls}">${lv.icon} ${lv.label}</span></p>
+        </div>
+      </div>
+      <div class="pts-row">
+        <span>${done}/${TASKS.length} tareas</span>
+        <span class="pts-val">${pts} pts</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:${pct}%;background:linear-gradient(90deg,${g.accent},${g.accent}cc)"></div>
+      </div>
+      <div class="task-dots" aria-hidden="true">
+        ${g.tasks.map(t => `<div class="task-dot ${t.status==='done'?'done':t.status==='partial'?'partial':''}"></div>`).join('')}
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* ── OPEN GROUP DETAIL ── */
+function openGroup(gid) {
+  const groups = loadData();
+  const g = groups.find(x => x.id===gid);
+  document.querySelectorAll('.group-card').forEach(c => c.classList.remove('selected'));
+  const card = document.getElementById('card-'+gid);
+  if (card) { card.classList.add('selected'); }
+  const pts = getPoints(g);
+  const lv  = getLevel(pts);
+
+  const panel = document.getElementById('detail-panel');
+  panel.innerHTML = `
+  <div class="detail-panel" role="region" aria-label="Detalle de ${g.name}">
+    <div class="detail-header" style="background:linear-gradient(135deg,${g.accent}cc,${g.accent}88)">
+      <span class="detail-emoji">${g.emoji}</span>
+      <div>
+        <div class="detail-title">${g.name}</div>
+        <div class="detail-sub"><span class="level-badge ${lv.cls}">${lv.icon} ${lv.label}</span> · ${pts} puntos · ${countDone(g)}/${TASKS.length} tareas completas</div>
+      </div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab active" role="tab" aria-selected="true" onclick="switchTab(event,'dtasks-${gid}',this,'${gid}')">📋 Tareas</button>
+      <button class="tab" role="tab" aria-selected="false" onclick="switchTab(event,'dnotes-${gid}',this,'${gid}')">📝 Nota general</button>
+    </div>
+    <div id="dtasks-${gid}" class="tab-content active">
+      ${g.tasks.map(t => {
+        const task = TASKS.find(x => x.id===t.id);
+        const scCls = t.status==='done' ? 'sc-done' : t.status==='partial' ? 'sc-partial' : 'sc-pending';
+        const scLbl = t.status==='done' ? '✅ Completa' : t.status==='partial' ? '⏳ En progreso' : '⬜ Pendiente';
+        return `
+        <div class="task-row">
+          <span class="task-page-tag">${task.page}</span>
+          <div class="task-body">
+            <div class="task-name-text">${task.name}</div>
+            <div class="task-controls">
+              <select class="status-select" aria-label="Estado de ${task.name}"
+                onchange="updateStatus('${gid}','${t.id}',this.value)">
+                <option value="pending"  ${t.status==='pending'?'selected':''}>Pendiente</option>
+                <option value="partial"  ${t.status==='partial'?'selected':''}>En progreso</option>
+                <option value="done"     ${t.status==='done'?'selected':''}>Completa</option>
+              </select>
+              <div class="stars-row" role="group" aria-label="Valoración de ${task.name}">
+                ${[1,2,3].map(s => `
+                  <button class="star-btn ${(t.stars||0)>=s?'lit':''}"
+                    aria-label="${s} estrella${s>1?'s':''}"
+                    onclick="setStars('${gid}','${t.id}',${s})">★</button>`).join('')}
+              </div>
+              <span class="status-chip ${scCls}">${scLbl}</span>
+            </div>
+            <textarea class="comment-area" rows="2"
+              placeholder="Comentario o feedback para este grupo…"
+              id="cmt-${gid}-${t.id}">${t.comment||''}</textarea>
+            <button class="save-btn" onclick="saveComment('${gid}','${t.id}')">💾 Guardar comentario</button>
+            <div class="ok-msg" id="ok-${gid}-${t.id}">✅ ¡Guardado!</div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div id="dnotes-${gid}" class="tab-content">
+      <p style="font-size:0.83rem;color:var(--ink-muted);margin-bottom:10px;font-weight:600">Valoración general del equipo, actitud, trabajo en grupo…</p>
+      <textarea class="note-textarea" rows="6"
+        placeholder="Escribe aquí tu valoración general del equipo…"
+        id="gnote-${gid}">${g.generalNote||''}</textarea>
+      <button class="save-btn" onclick="saveGeneralNote('${gid}')">💾 Guardar nota</button>
+      <div class="ok-msg" id="gok-${gid}">✅ ¡Guardado!</div>
+    </div>
+  </div>`;
+
+  panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function switchTab(e, tabId, btn, gid) {
+  const wrapper = btn.closest('[role="region"]');
+  wrapper.querySelectorAll('.tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+  wrapper.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+  document.getElementById(tabId).classList.add('active');
+}
+
+function updateStatus(gid, tid, val) {
+  const groups = loadData();
+  const t = groups.find(g=>g.id===gid).tasks.find(t=>t.id===tid);
+  t.status = val;
+  saveData(groups);
+  renderGroups();
+  openGroup(gid);
+}
+
+function setStars(gid, tid, val) {
+  const groups = loadData();
+  const t = groups.find(g=>g.id===gid).tasks.find(t=>t.id===tid);
+  t.stars = (t.stars===val) ? 0 : val;
+  saveData(groups);
+  renderGroups();
+  openGroup(gid);
+}
+
+function saveComment(gid, tid) {
+  const groups = loadData();
+  const t = groups.find(g=>g.id===gid).tasks.find(t=>t.id===tid);
+  const el = document.getElementById('cmt-'+gid+'-'+tid);
+  if (el) { t.comment = el.value; saveData(groups); }
+  flashOk('ok-'+gid+'-'+tid);
+}
+
+function saveGeneralNote(gid) {
+  const groups = loadData();
+  const g = groups.find(x=>x.id===gid);
+  const el = document.getElementById('gnote-'+gid);
+  if (el) { g.generalNote = el.value; saveData(groups); }
+  flashOk('gok-'+gid);
+}
+
+function flashOk(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.display = 'block';
+  setTimeout(() => el.style.display='none', 2200);
+}
+
+/* ── RANKING ── */
+function renderRanking() {
+  const groups = loadData();
+  const sorted = [...groups].sort((a,b) => getPoints(b)-getPoints(a));
+  const maxPts = Math.max(1, getPoints(sorted[0]));
+  const medals = ['🥇','🥈','🥉'];
+  document.getElementById('ranking-list').innerHTML = sorted.map((g,i) => {
+    const pts = getPoints(g);
+    const lv  = getLevel(pts);
+    const pct = Math.round((pts/maxPts)*100);
+    return `
+    <div class="ranking-row">
+      <div class="rank-pos">${medals[i]||i+1}</div>
+      <div style="font-size:1.8rem">${g.emoji}</div>
+      <div class="rank-info">
+        <div class="rank-name">${g.name}</div>
+        <div class="rank-meta">
+          <span class="level-badge ${lv.cls}">${lv.icon} ${lv.label}</span>
+          <span>${pts} puntos</span>
+          <span>${countDone(g)}/${TASKS.length} tareas</span>
+        </div>
+      </div>
+      <div class="rank-bar-wrap" aria-hidden="true">
+        <div class="rank-bar" style="width:${pct}%;background:linear-gradient(90deg,${g.accent},${g.accent}aa)"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ── RESUMEN ── */
+function renderResumen() {
+  const groups = loadData();
+  const total  = groups.length * TASKS.length;
+  const done   = groups.reduce((s,g)=>s+countDone(g),0);
+  const totalPts = groups.reduce((s,g)=>s+getPoints(g),0);
+  const avgPts = Math.round(totalPts/groups.length);
+  const pct    = Math.round((done/total)*100);
+  const advanced = groups.filter(g => getLevel(getPoints(g)).min >= 70).length;
+  const allDone  = groups.filter(g => countDone(g)===TASKS.length).length;
+
+  document.getElementById('metrics-grid').innerHTML = [
+    {val:pct+'%',  lbl:'Progreso clase'},
+    {val:done,     lbl:'Tareas completas'},
+    {val:avgPts,   lbl:'Puntos medios'},
+    {val:advanced, lbl:'Grupos avanzados'},
+    {val:allDone,  lbl:'Proyectos listos'},
+    {val:groups.length, lbl:'Equipos activos'},
+  ].map(m=>`<div class="metric-card"><div class="metric-val">${m.val}</div><div class="metric-lbl">${m.lbl}</div></div>`).join('');
+
+  const sorted  = [...groups].sort((a,b)=>getPoints(b)-getPoints(a));
+  const leader  = sorted[0];
+  const slower  = sorted[sorted.length-1];
+  const halfway = groups.filter(g=>countDone(g)>=3 && countDone(g)<TASKS.length);
+
+  document.getElementById('insights-list').innerHTML = `
+    <div class="insight insight-green">
+      <span class="insight-icon">🚀</span>
+      <div><strong>${leader.name}</strong> lidera con ${getPoints(leader)} puntos y ${countDone(leader)} tareas completadas. ¡Excelente ritmo!</div>
+    </div>
+    <div class="insight insight-amber">
+      <span class="insight-icon">💛</span>
+      <div><strong>${slower.name}</strong> necesita atención. Considera dedicarles tiempo esta semana para desbloquear su avance.</div>
+    </div>
+    <div class="insight insight-blue">
+      <span class="insight-icon">💡</span>
+      <div>${allDone > 0 ? allDone+' equipo(s) han completado todas las tareas y están listos para la exposición oral.' : halfway.length+' equipos están a mitad del proyecto. ¡Momento ideal para una puesta en común!'}</div>
+    </div>
+  `;
+}
+
+/* ── INSIGNIAS ── */
+function renderInsignias() {
+  const badgesData = [
+    {icon:'🌱', name:'Aprendiz', cls:'lv-aprendiz', desc:'Primeros pasos en la ciudad del futuro. Los cimientos están poniéndose.', pts:'0–69 pts', ptsCls:'background:#EEF2FF;color:#4338CA'},
+    {icon:'🔨', name:'Constructor', cls:'lv-constructor', desc:'La ciudad empieza a tomar forma. Las calles y los sectores están vivos.', pts:'70–159 pts', ptsCls:'background:#EFF6FF;color:#1D4ED8'},
+    {icon:'🗺️', name:'Urbanista', cls:'lv-urbanista', desc:'Dominas el diseño urbano sostenible. La energía y la planificación brillan.', pts:'160–279 pts', ptsCls:'background:#ECFDF5;color:#065F46'},
+    {icon:'👑', name:'Arquitecto del Futuro', cls:'lv-arquitecto', desc:'Nivel máximo. Ciudad completa, sostenible y lista para presentar al mundo.', pts:'280+ pts', ptsCls:'background:#FFFBEB;color:#92400E'},
+  ];
+  document.getElementById('badges-grid').innerHTML = badgesData.map(b=>`
+    <div class="badge-card">
+      <span class="badge-icon">${b.icon}</span>
+      <div class="badge-name"><span class="level-badge ${b.cls}">${b.icon} ${b.name}</span></div>
+      <p class="badge-desc">${b.desc}</p>
+      <span class="badge-pts" style="${b.ptsCls}">${b.pts}</span>
+    </div>`).join('');
+
+  document.getElementById('points-legend').innerHTML = `
+    <h3>⭐ Sistema de puntos</h3>
+    <div class="points-row"><span>Tarea completada (1 estrella)</span><span class="pts-badge">10 pts</span></div>
+    <div class="points-row"><span>Tarea completada (2 estrellas)</span><span class="pts-badge">20 pts</span></div>
+    <div class="points-row"><span>Tarea completada (3 estrellas)</span><span class="pts-badge">30 pts</span></div>
+    <div class="points-row"><span>Tarea en progreso</span><span class="pts-badge">5 pts</span></div>
+    <div class="points-row"><span>Exposición oral valorada con 3 ⭐</span><span class="pts-badge">30 pts</span></div>
+    <div class="points-row"><span>Puntos máximos posibles</span><span class="pts-badge" style="background:#7C3AED">210 pts por ruta completa</span></div>
+  `;
+}
+
+/* ── NAV ── */
+function showView(name, btn) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
+  document.getElementById('view-'+name).classList.add('active');
+  if (btn) { btn.classList.add('active'); btn.setAttribute('aria-current','page'); }
+  if (name==='ranking') renderRanking();
+  if (name==='resumen') renderResumen();
+  if (name==='insignias') renderInsignias();
+  if (name==='grupos') renderGroups();
+}
+
+/* ── INIT ── */
+renderGroups();
+</script>
+</body>
+</html>
