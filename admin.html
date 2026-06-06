@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Docente · El Secreto de las Gemas</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#F4B942;--gold-light:#FFD97D;--gold-dark:#C8860A;
+  --gem-blue:#38C6F4;--gem-purple:#B06FE8;--gem-green:#3DDBA0;
+  --gem-red:#F4606C;--gem-amber:#F49C42;
+  --stone:#1A1A2E;--stone-mid:#16213E;--stone-light:#0F3460;
+  --parchment:#F5E6C8;--ink:#2C1810;
+  --font-display:'Cinzel Decorative',serif;
+  --font-title:'Cinzel',serif;
+  --font-body:'Nunito',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--stone);color:#E8D5B0;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(56,198,244,0.07) 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(176,111,232,0.07) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+/* HEADER */
+.header{position:relative;z-index:1;background:linear-gradient(135deg,rgba(15,52,96,0.95),rgba(22,33,62,0.98));border-bottom:1px solid rgba(244,185,66,0.2);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.header-left{display:flex;align-items:center;gap:12px;}
+.header-logo{font-size:2rem;filter:drop-shadow(0 0 10px rgba(56,198,244,0.5));animation:glow 3s ease-in-out infinite;}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 8px rgba(56,198,244,0.4));}50%{filter:drop-shadow(0 0 20px rgba(56,198,244,0.8)) drop-shadow(0 0 30px rgba(244,185,66,0.4));}}
+.header-title{font-family:var(--font-display);font-size:clamp(0.9rem,2vw,1.2rem);background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.header-sub{font-family:var(--font-title);font-size:0.62rem;letter-spacing:2px;color:rgba(232,213,176,0.4);margin-top:2px;}
+.header-link{font-family:var(--font-title);font-size:0.65rem;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border-radius:20px;border:1px solid rgba(56,198,244,0.3);background:rgba(56,198,244,0.06);color:var(--gem-blue);text-decoration:none;transition:all 0.2s;}
+.header-link:hover{background:rgba(56,198,244,0.15);box-shadow:0 0 12px rgba(56,198,244,0.2);}
+
+/* NAV */
+.nav-wrap{max-width:960px;margin:0 auto;padding:1.25rem 1.5rem 0;position:relative;z-index:1;}
+.nav{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid rgba(244,185,66,0.12);padding-bottom:0;}
+.nav-btn{font-family:var(--font-title);font-size:0.68rem;letter-spacing:1.5px;text-transform:uppercase;padding:8px 16px;border-radius:8px 8px 0 0;border:1px solid transparent;border-bottom:none;background:transparent;color:rgba(232,213,176,0.4);cursor:pointer;transition:all 0.2s;position:relative;bottom:-1px;}
+.nav-btn:hover{color:var(--gold);}
+.nav-btn.active{color:var(--gold);background:rgba(22,33,62,0.95);border-color:rgba(244,185,66,0.15);border-bottom-color:rgba(22,33,62,0.95);}
+
+/* MAIN */
+.main{max-width:960px;margin:0 auto;padding:1.5rem 1.5rem 5rem;position:relative;z-index:1;}
+.view{display:none;}.view.active{display:block;animation:fadeUp 0.35s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.section-lbl{font-family:var(--font-title);font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:rgba(244,185,66,0.45);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-lbl::after{content:'';flex:1;height:1px;background:rgba(244,185,66,0.08);}
+
+/* CARDS */
+.gem-card{background:linear-gradient(135deg,rgba(22,33,62,0.95),rgba(15,52,96,0.6));border:1px solid rgba(244,185,66,0.12);border-radius:14px;transition:all 0.2s;position:relative;overflow:hidden;}
+.gem-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--card-accent,linear-gradient(90deg,var(--gold),var(--gem-blue)));opacity:0.6;}
+.gem-card:hover{border-color:rgba(244,185,66,0.28);box-shadow:0 8px 28px rgba(0,0,0,0.4);}
+.gem-card.selected{border-color:rgba(56,198,244,0.45);box-shadow:0 0 0 2px rgba(56,198,244,0.12);}
+
+/* GROUPS GRID */
+.groups-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;}
+.group-card{padding:1rem;cursor:pointer;}
+.group-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.group-emoji{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;background:rgba(244,185,66,0.06);border:1px solid rgba(244,185,66,0.12);flex-shrink:0;}
+.group-name{font-family:var(--font-title);font-size:0.82rem;font-weight:600;color:var(--parchment);line-height:1.3;}
+.level-gem{display:inline-flex;align-items:center;gap:4px;font-size:0.6rem;font-family:var(--font-title);letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:10px;}
+.lv-aprendiz{background:rgba(156,163,175,0.1);color:#9CA3AF;border:1px solid rgba(156,163,175,0.18);}
+.lv-explorador{background:rgba(56,198,244,0.1);color:var(--gem-blue);border:1px solid rgba(56,198,244,0.22);}
+.lv-guardian{background:rgba(61,219,160,0.1);color:var(--gem-green);border:1px solid rgba(61,219,160,0.22);}
+.lv-maestro{background:rgba(244,185,66,0.1);color:var(--gold);border:1px solid rgba(244,185,66,0.28);}
+.pts-row{display:flex;justify-content:space-between;font-size:0.72rem;color:rgba(232,213,176,0.55);margin-bottom:5px;}
+.pts-val{font-weight:800;color:var(--gold-light);font-size:0.88rem;}
+.bar-track{background:rgba(255,255,255,0.05);border-radius:99px;height:5px;overflow:hidden;}
+.bar-fill{height:5px;border-radius:99px;transition:width 0.7s cubic-bezier(.34,1.56,.64,1);}
+.pips{display:flex;gap:3px;margin-top:7px;}
+.pip{flex:1;height:4px;border-radius:99px;background:rgba(255,255,255,0.06);}
+.pip.done{background:var(--gem-green);}
+.pip.partial{background:var(--gem-amber);}
+
+/* DETAIL */
+.detail-wrap{margin-top:14px;}
+.detail-card{border:1px solid rgba(56,198,244,0.2);border-radius:16px;overflow:hidden;background:linear-gradient(135deg,rgba(15,52,96,0.7),rgba(22,33,62,0.95));box-shadow:0 16px 48px rgba(0,0,0,0.4);animation:slideDown 0.3s ease;}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:none;}}
+.detail-head{padding:1.1rem 1.4rem;background:linear-gradient(135deg,rgba(10,127,168,0.25),rgba(176,111,232,0.12));border-bottom:1px solid rgba(56,198,244,0.15);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.detail-emoji{font-size:2rem;}
+.detail-title{font-family:var(--font-title);font-size:1rem;font-weight:700;color:var(--gold-light);}
+.detail-meta{font-size:0.72rem;color:rgba(232,213,176,0.55);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid rgba(244,185,66,0.08);padding:0 1.25rem;}
+.tab{font-family:var(--font-title);font-size:0.65rem;letter-spacing:1.5px;text-transform:uppercase;padding:9px 12px;cursor:pointer;color:rgba(232,213,176,0.35);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.2s;background:none;border-top:none;border-left:none;border-right:none;}
+.tab:hover{color:var(--gold);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-content{display:none;padding:1.1rem 1.4rem;}
+.tab-content.active{display:block;}
+
+/* TASK ROWS */
+.task-row{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(244,185,66,0.05);}
+.task-row:last-child{border:none;}
+.task-tag{font-size:0.58rem;font-family:var(--font-title);letter-spacing:0.8px;padding:2px 7px;border-radius:7px;background:rgba(244,185,66,0.07);border:1px solid rgba(244,185,66,0.13);color:var(--gold);white-space:nowrap;flex-shrink:0;margin-top:2px;}
+.task-body{flex:1;}
+.task-name{font-size:0.86rem;font-weight:700;color:var(--parchment);}
+.task-controls{display:flex;align-items:center;gap:8px;margin-top:5px;flex-wrap:wrap;}
+.status-sel{font-family:var(--font-title);font-size:0.68rem;padding:4px 8px;border-radius:7px;border:1px solid rgba(244,185,66,0.18);background:rgba(22,33,62,0.9);color:#E8D5B0;cursor:pointer;appearance:none;-webkit-appearance:none;}
+.status-sel:focus{outline:none;border-color:var(--gold);}
+.stars-row{display:flex;gap:1px;}
+.star-btn{font-size:1.1rem;background:none;border:none;cursor:pointer;color:rgba(244,185,66,0.18);transition:all 0.15s;padding:0 1px;line-height:1;}
+.star-btn.lit{color:var(--gold);text-shadow:0 0 8px rgba(244,185,66,0.5);}
+.star-btn:hover{transform:scale(1.3);}
+.status-chip{font-size:0.62rem;font-family:var(--font-title);letter-spacing:0.5px;padding:2px 8px;border-radius:10px;}
+.sc-done{background:rgba(61,219,160,0.1);color:var(--gem-green);border:1px solid rgba(61,219,160,0.18);}
+.sc-partial{background:rgba(244,156,66,0.1);color:var(--gem-amber);border:1px solid rgba(244,156,66,0.18);}
+.sc-pending{background:rgba(255,255,255,0.03);color:rgba(232,213,176,0.35);border:1px solid rgba(255,255,255,0.07);}
+.cmt-area{width:100%;margin-top:6px;font-family:var(--font-body);font-size:0.78rem;padding:7px 10px;background:rgba(255,255,255,0.03);border:1px solid rgba(244,185,66,0.1);border-radius:8px;color:#E8D5B0;resize:none;transition:border-color 0.2s;line-height:1.6;}
+.cmt-area:focus{outline:none;border-color:rgba(244,185,66,0.3);}
+.gem-btn{font-family:var(--font-title);font-size:0.65rem;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:20px;border:1px solid rgba(244,185,66,0.25);background:rgba(244,185,66,0.05);color:var(--gold);cursor:pointer;margin-top:6px;transition:all 0.2s;}
+.gem-btn:hover{background:rgba(244,185,66,0.14);box-shadow:0 0 10px rgba(244,185,66,0.18);}
+.ok-msg{display:none;font-size:0.68rem;color:var(--gem-green);margin-top:3px;font-family:var(--font-title);letter-spacing:0.8px;}
+
+/* ROLES */
+.roles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-bottom:1rem;}
+.role-lbl{font-family:var(--font-title);font-size:0.62rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--gem-purple);margin-bottom:4px;}
+.role-input{width:100%;font-family:var(--font-body);font-size:0.8rem;padding:7px 10px;background:rgba(255,255,255,0.03);border:1px solid rgba(176,111,232,0.18);border-radius:8px;color:#E8D5B0;transition:border-color 0.2s;}
+.role-input:focus{outline:none;border-color:rgba(176,111,232,0.45);}
+.note-ta{width:100%;font-family:var(--font-body);font-size:0.82rem;padding:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(244,185,66,0.1);border-radius:10px;color:#E8D5B0;resize:none;line-height:1.7;transition:border-color 0.2s;}
+.note-ta:focus{outline:none;border-color:rgba(244,185,66,0.28);}
+
+/* RANKING */
+.panel-card{border:1px solid rgba(244,185,66,0.13);border-radius:16px;padding:1.5rem;background:linear-gradient(135deg,rgba(22,33,62,0.95),rgba(15,52,96,0.6));box-shadow:0 8px 32px rgba(0,0,0,0.3);}
+.panel-title{font-family:var(--font-title);font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;display:flex;align-items:center;gap:8px;}
+.ranking-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(244,185,66,0.06);}
+.ranking-row:last-child{border:none;}
+.rank-pos{font-family:var(--font-display);font-size:1.3rem;width:34px;text-align:center;flex-shrink:0;}
+.rank-info{flex:1;}
+.rank-name{font-family:var(--font-title);font-size:0.85rem;font-weight:600;color:var(--parchment);}
+.rank-meta{font-size:0.7rem;color:rgba(232,213,176,0.45);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.rank-bar-wrap{width:100px;background:rgba(255,255,255,0.04);border-radius:99px;height:6px;flex-shrink:0;}
+.rank-bar{height:6px;border-radius:99px;transition:width 0.7s cubic-bezier(.34,1.56,.64,1);}
+
+/* METRICS */
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-bottom:1.5rem;}
+.metric-card{background:linear-gradient(135deg,rgba(22,33,62,0.95),rgba(15,52,96,0.5));border:1px solid rgba(244,185,66,0.1);border-radius:12px;padding:.9rem;text-align:center;}
+.metric-val{font-family:var(--font-display);font-size:1.7rem;font-weight:700;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.metric-lbl{font-family:var(--font-title);font-size:0.58rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(232,213,176,0.4);margin-top:2px;}
+.insight{display:flex;gap:10px;padding:10px 12px;border-radius:9px;margin-bottom:7px;font-size:0.8rem;font-weight:600;border:1px solid rgba(255,255,255,0.04);}
+.ic-green{background:rgba(61,219,160,0.05);border-color:rgba(61,219,160,0.1);color:rgba(61,219,160,0.85);}
+.ic-amber{background:rgba(244,156,66,0.05);border-color:rgba(244,156,66,0.1);color:rgba(244,156,66,0.85);}
+.ic-blue{background:rgba(56,198,244,0.05);border-color:rgba(56,198,244,0.1);color:rgba(56,198,244,0.85);}
+
+@media(max-width:600px){.main,.nav-wrap{padding-left:1rem;padding-right:1rem;}.rank-bar-wrap{display:none;}}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:rgba(22,33,62,0.5);}::-webkit-scrollbar-thumb{background:rgba(244,185,66,0.18);border-radius:3px;}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <div class="header-logo">🔮</div>
+    <div>
+      <div class="header-title">Panel Docente</div>
+      <div class="header-sub">El Secreto de las Gemas · Los Gallardos 2050</div>
+    </div>
+  </div>
+  <a href="index.html" class="header-link">◆ Vista del alumnado</a>
+</header>
+
+<nav class="nav-wrap">
+  <div class="nav">
+    <button class="nav-btn active" onclick="showView('grupos',this)">⚔️ Grupos</button>
+    <button class="nav-btn" onclick="showView('ranking',this)">🏆 Ranking</button>
+    <button class="nav-btn" onclick="showView('resumen',this)">🔮 Resumen</button>
+  </div>
+</nav>
+
+<main class="main">
+  <div id="view-grupos" class="view active">
+    <div class="section-lbl">Equipos de aventureros</div>
+    <div class="groups-grid" id="groups-grid"></div>
+    <div id="detail-panel" class="detail-wrap"></div>
+  </div>
+  <div id="view-ranking" class="view">
+    <div class="panel-card">
+      <div class="panel-title">✦ Clasificación de Gemas</div>
+      <div id="ranking-list"></div>
+    </div>
+  </div>
+  <div id="view-resumen" class="view">
+    <div class="panel-card">
+      <div class="panel-title">🔮 Resumen de la Aventura</div>
+      <div class="metrics-grid" id="metrics-grid"></div>
+      <div class="section-lbl">Observaciones</div>
+      <div id="insights-list"></div>
+    </div>
+  </div>
+</main>
+
+<script src="shared.js"></script>
+<script>
+function renderGroups(){
+  const groups=loadData();
+  document.getElementById('groups-grid').innerHTML=groups.map((g,i)=>{
+    const pts=getPoints(g),lv=getLevel(pts),done=countDone(g),pct=Math.round((done/TASKS.length)*100);
+    return `<article class="gem-card group-card" id="card-${g.id}" style="--card-accent:${g.accent}"
+      onclick="openGroup('${g.id}')" tabindex="0" onkeydown="if(event.key==='Enter')openGroup('${g.id}')">
+      <div class="group-top">
+        <div class="group-emoji">${g.emoji}</div>
+        <div><div class="group-name">${g.name}</div>
+        <div style="margin-top:3px"><span class="level-gem ${lv.cls}">${lv.icon} ${lv.label}</span></div></div>
+      </div>
+      <div class="pts-row"><span>${done}/${TASKS.length} misiones</span><span class="pts-val">${pts} pts</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${g.accent}"></div></div>
+      <div class="pips">${g.tasks.map(t=>`<div class="pip ${t.status==='done'?'done':t.status==='partial'?'partial':''}"></div>`).join('')}</div>
+    </article>`;
+  }).join('');
+}
+
+function openGroup(gid){
+  const groups=loadData(),g=groups.find(x=>x.id===gid);
+  document.querySelectorAll('.group-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('card-'+gid)?.classList.add('selected');
+  const pts=getPoints(g),lv=getLevel(pts);
+  document.getElementById('detail-panel').innerHTML=`
+  <div class="detail-card">
+    <div class="detail-head" style="background:linear-gradient(135deg,${g.solid}20,${g.solid}08)">
+      <span class="detail-emoji">${g.emoji}</span>
+      <div><div class="detail-title">${g.name}</div>
+      <div class="detail-meta"><span class="level-gem ${lv.cls}">${lv.icon} ${lv.label}</span><span>${pts} pts</span><span>${countDone(g)}/${TASKS.length} misiones</span></div></div>
+    </div>
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab(event,'dtasks-${gid}','${gid}')">⚔️ Misiones</button>
+      <button class="tab" onclick="switchTab(event,'droles-${gid}','${gid}')">👥 Roles</button>
+      <button class="tab" onclick="switchTab(event,'dnotes-${gid}','${gid}')">📜 Nota general</button>
+    </div>
+    <div id="dtasks-${gid}" class="tab-content active">
+      ${g.tasks.map(t=>{
+        const task=TASKS.find(x=>x.id===t.id);
+        const scCls=t.status==='done'?'sc-done':t.status==='partial'?'sc-partial':'sc-pending';
+        const scLbl=t.status==='done'?'✅ Completa':t.status==='partial'?'⏳ En progreso':'◻ Pendiente';
+        return `<div class="task-row">
+          <span class="task-tag">${task.page}</span>
+          <div class="task-body">
+            <div class="task-name">${task.name}</div>
+            <div class="task-controls">
+              <select class="status-sel" onchange="updateStatus('${gid}','${t.id}',this.value)">
+                <option value="pending" ${t.status==='pending'?'selected':''}>Pendiente</option>
+                <option value="partial" ${t.status==='partial'?'selected':''}>En progreso</option>
+                <option value="done" ${t.status==='done'?'selected':''}>Completa</option>
+              </select>
+              <div class="stars-row">${[1,2,3].map(s=>`<button class="star-btn ${(t.stars||0)>=s?'lit':''}" onclick="setStars('${gid}','${t.id}',${s})">★</button>`).join('')}</div>
+              <span class="status-chip ${scCls}">${scLbl}</span>
+            </div>
+            <textarea class="cmt-area" rows="2" placeholder="Comentario para el grupo…" id="cmt-${gid}-${t.id}">${t.comment||''}</textarea>
+            <button class="gem-btn" onclick="saveCmt('${gid}','${t.id}')">Guardar</button>
+            <div class="ok-msg" id="ok-${gid}-${t.id}">✦ Guardado</div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div id="droles-${gid}" class="tab-content">
+      <p style="font-size:0.75rem;color:rgba(232,213,176,0.45);margin-bottom:10px;font-family:var(--font-title)">Asigna los roles cooperativos del equipo</p>
+      <div class="roles-grid">
+        ${[{key:'coord',lbl:'Coordinador/a',icon:'⚔️'},{key:'secre',lbl:'Secretari@',icon:'📜'},{key:'moder',lbl:'Moderador/a',icon:'⚖️'},{key:'porta',lbl:'Portavoz',icon:'📣'}].map(r=>`
+        <div><div class="role-lbl">${r.icon} ${r.lbl}</div>
+        <input type="text" class="role-input" id="role-${gid}-${r.key}" placeholder="Nombre…" value="${g.roles?.[r.key]||''}"/></div>`).join('')}
+      </div>
+      <button class="gem-btn" onclick="saveRoles('${gid}')">✦ Guardar roles</button>
+      <div class="ok-msg" id="rok-${gid}">✦ Roles guardados</div>
+    </div>
+    <div id="dnotes-${gid}" class="tab-content">
+      <p style="font-size:0.75rem;color:rgba(232,213,176,0.45);margin-bottom:8px;font-family:var(--font-title)">Valoración general del equipo</p>
+      <textarea class="note-ta" rows="5" id="gnote-${gid}" placeholder="Actitud, trabajo en equipo, evolución…">${g.generalNote||''}</textarea>
+      <button class="gem-btn" onclick="saveNote('${gid}')">✦ Guardar nota</button>
+      <div class="ok-msg" id="gok-${gid}">✦ Nota guardada</div>
+    </div>
+  </div>`;
+  document.getElementById('detail-panel').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function switchTab(e,tabId,gid){
+  const w=e.target.closest('.detail-card');
+  w.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  w.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  e.target.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+function updateStatus(gid,tid,val){const g=loadData();g.find(x=>x.id===gid).tasks.find(t=>t.id===tid).status=val;saveData(g);renderGroups();openGroup(gid);}
+function setStars(gid,tid,val){const g=loadData();const t=g.find(x=>x.id===gid).tasks.find(t=>t.id===tid);t.stars=(t.stars===val)?0:val;saveData(g);renderGroups();openGroup(gid);}
+function saveCmt(gid,tid){const g=loadData();const t=g.find(x=>x.id===gid).tasks.find(t=>t.id===tid);const el=document.getElementById('cmt-'+gid+'-'+tid);if(el){t.comment=el.value;saveData(g);}flashOk('ok-'+gid+'-'+tid);}
+function saveRoles(gid){const g=loadData();const gr=g.find(x=>x.id===gid);['coord','secre','moder','porta'].forEach(k=>{const el=document.getElementById('role-'+gid+'-'+k);if(el){gr.roles=gr.roles||{};gr.roles[k]=el.value;}});saveData(g);renderGroups();flashOk('rok-'+gid);}
+function saveNote(gid){const g=loadData();const gr=g.find(x=>x.id===gid);const el=document.getElementById('gnote-'+gid);if(el){gr.generalNote=el.value;saveData(g);}flashOk('gok-'+gid);}
+
+function renderRanking(){
+  const groups=loadData(),sorted=[...groups].sort((a,b)=>getPoints(b)-getPoints(a)),maxPts=Math.max(1,getPoints(sorted[0]));
+  const medals=['🥇','🥈','🥉'];
+  document.getElementById('ranking-list').innerHTML=sorted.map((g,i)=>{
+    const pts=getPoints(g),lv=getLevel(pts),pct=Math.round((pts/maxPts)*100);
+    return `<div class="ranking-row">
+      <div class="rank-pos" style="color:${i<3?['#FFD700','#C0C0C0','#CD7F32'][i]:g.solid}">${medals[i]||i+1}</div>
+      <div style="font-size:1.5rem">${g.emoji}</div>
+      <div class="rank-info"><div class="rank-name">${g.name}</div>
+      <div class="rank-meta"><span class="level-gem ${lv.cls}">${lv.icon} ${lv.label}</span><span>${pts} pts</span><span>${countDone(g)}/${TASKS.length} misiones</span></div></div>
+      <div class="rank-bar-wrap"><div class="rank-bar" style="width:${pct}%;background:${g.accent}"></div></div>
+    </div>`;
+  }).join('');
+}
+
+function renderResumen(){
+  const groups=loadData(),total=groups.length*TASKS.length;
+  const done=groups.reduce((s,g)=>s+countDone(g),0);
+  const avgPts=Math.round(groups.reduce((s,g)=>s+getPoints(g),0)/groups.length);
+  const pct=Math.round((done/total)*100);
+  const advanced=groups.filter(g=>getLevel(getPoints(g)).min>=70).length;
+  const allDone=groups.filter(g=>countDone(g)===TASKS.length).length;
+  document.getElementById('metrics-grid').innerHTML=[
+    {val:pct+'%',lbl:'Progreso'},{val:done,lbl:'Misiones OK'},
+    {val:avgPts,lbl:'Pts medios'},{val:advanced,lbl:'Avanzados'},
+    {val:allDone,lbl:'Listos'},{val:groups.length,lbl:'Equipos'},
+  ].map(m=>`<div class="metric-card"><div class="metric-val">${m.val}</div><div class="metric-lbl">${m.lbl}</div></div>`).join('');
+  const sorted=[...groups].sort((a,b)=>getPoints(b)-getPoints(a));
+  document.getElementById('insights-list').innerHTML=`
+    <div class="insight ic-green"><span>✦</span><div><strong>${sorted[0].name}</strong> lidera con ${getPoints(sorted[0])} pts. ¡Equipo de leyenda!</div></div>
+    <div class="insight ic-amber"><span>⚡</span><div><strong>${sorted[sorted.length-1].name}</strong> necesita impulso esta semana.</div></div>
+    <div class="insight ic-blue"><span>🔮</span><div>${allDone>0?allDone+' equipo(s) listos para la exposición oral.':'Los grupos avanzan hacia el secreto final.'}</div></div>`;
+}
+
+function showView(name,btn){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  btn?.classList.add('active');
+  if(name==='ranking')renderRanking();
+  if(name==='resumen')renderResumen();
+  if(name==='grupos')renderGroups();
+}
+renderGroups();
+</script>
+</body>
+</html>

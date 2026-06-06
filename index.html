@@ -4,776 +4,163 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El Secreto de las Gemas · Los Gallardos 2050</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --gold: #F4B942;
-  --gold-light: #FFD97D;
-  --gold-dark: #C8860A;
-  --gem-blue: #38C6F4;
-  --gem-blue-dark: #0A7FA8;
-  --gem-purple: #B06FE8;
-  --gem-green: #3DDBA0;
-  --gem-red: #F4606C;
-  --gem-amber: #F49C42;
-  --parchment: #F5E6C8;
-  --parchment-dark: #E8D4A0;
-  --ink: #2C1810;
-  --ink-light: #5C3D2E;
-  --stone: #1A1A2E;
-  --stone-mid: #16213E;
-  --stone-light: #0F3460;
-  --shadow: rgba(0,0,0,0.5);
-  --font-display: 'Cinzel Decorative', serif;
-  --font-title: 'Cinzel', serif;
-  --font-body: 'Nunito', sans-serif;
+:root{
+  --gold:#F4B942;--gold-light:#FFD97D;
+  --gem-blue:#38C6F4;--gem-purple:#B06FE8;--gem-green:#3DDBA0;
+  --gem-red:#F4606C;--gem-amber:#F49C42;
+  --stone:#1A1A2E;--stone-mid:#16213E;--stone-light:#0F3460;
+  --parchment:#F5E6C8;
+  --font-display:'Cinzel Decorative',serif;
+  --font-title:'Cinzel',serif;
+  --font-body:'Nunito',sans-serif;
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--stone);color:#E8D5B0;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(56,198,244,0.07) 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(176,111,232,0.07) 0%,transparent 50%);pointer-events:none;z-index:0;}
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* HERO */
+.hero{position:relative;z-index:1;text-align:center;padding:2.5rem 1.5rem 1.5rem;}
+.hero-border{max-width:700px;margin:0 auto;border:1.5px solid rgba(244,185,66,0.25);border-radius:18px;padding:2rem 1.5rem 1.5rem;background:linear-gradient(135deg,rgba(22,33,62,0.92),rgba(15,52,96,0.7),rgba(22,33,62,0.92));box-shadow:0 0 40px rgba(56,198,244,0.1),0 0 70px rgba(244,185,66,0.06),inset 0 1px 0 rgba(244,185,66,0.15);position:relative;}
+.hero-border::before{content:'✦';position:absolute;top:-11px;left:50%;transform:translateX(-50%);color:var(--gold);font-size:1.1rem;background:var(--stone);padding:0 8px;}
+.logo-wrap{width:80px;height:80px;margin:0 auto 1rem;animation:glow 3s ease-in-out infinite;}
+.logo-wrap img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 18px rgba(56,198,244,0.55)) drop-shadow(0 0 35px rgba(244,185,66,0.35));}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 12px rgba(56,198,244,0.4));}50%{filter:drop-shadow(0 0 28px rgba(56,198,244,0.8)) drop-shadow(0 0 45px rgba(244,185,66,0.45));}}
+.hero-eyebrow{font-family:var(--font-title);font-size:0.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--gem-blue);margin-bottom:7px;opacity:0.85;}
+.hero-title{font-family:var(--font-display);font-size:clamp(1.3rem,4vw,2rem);font-weight:900;background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gem-blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.15;margin-bottom:5px;filter:drop-shadow(0 2px 8px rgba(244,185,66,0.25));}
+.hero-sub{font-family:var(--font-title);font-size:0.72rem;color:rgba(232,213,176,0.55);letter-spacing:2px;margin-bottom:1.2rem;}
 
-html { scroll-behavior: smooth; }
+/* GROUP SELECTOR */
+.selector-title{font-family:var(--font-title);font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:rgba(244,185,66,0.6);margin-bottom:10px;}
+.groups-selector{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+.sel-btn{font-family:var(--font-title);font-size:0.68rem;letter-spacing:1px;padding:6px 14px;border-radius:20px;border:1px solid rgba(244,185,66,0.2);background:rgba(244,185,66,0.04);color:rgba(232,213,176,0.6);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:5px;}
+.sel-btn:hover{border-color:rgba(244,185,66,0.4);color:var(--gold);background:rgba(244,185,66,0.08);}
+.sel-btn.active{border-color:var(--gold);color:var(--gold);background:rgba(244,185,66,0.12);box-shadow:0 0 12px rgba(244,185,66,0.15);}
 
-body {
-  font-family: var(--font-body);
-  background: var(--stone);
-  color: #E8D5B0;
-  min-height: 100vh;
-  overflow-x: hidden;
-  cursor: default;
-}
+/* NAV */
+.nav-wrap{max-width:860px;margin:0 auto;padding:.75rem 1.5rem 0;position:relative;z-index:1;}
+.nav{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid rgba(244,185,66,0.1);}
+.nav-btn{font-family:var(--font-title);font-size:0.65rem;letter-spacing:1.5px;text-transform:uppercase;padding:7px 14px;border-radius:7px 7px 0 0;border:1px solid transparent;border-bottom:none;background:transparent;color:rgba(232,213,176,0.35);cursor:pointer;transition:all 0.2s;position:relative;bottom:-1px;}
+.nav-btn:hover{color:var(--gold);}
+.nav-btn.active{color:var(--gold);background:rgba(22,33,62,0.95);border-color:rgba(244,185,66,0.13);border-bottom-color:rgba(22,33,62,0.95);}
 
-/* ── STARFIELD BACKGROUND ── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 20% 20%, rgba(56,198,244,0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, rgba(176,111,232,0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(244,185,66,0.04) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
+/* MAIN */
+.main{max-width:860px;margin:0 auto;padding:1.25rem 1.5rem 5rem;position:relative;z-index:1;}
+.view{display:none;}.view.active{display:block;animation:fadeUp 0.35s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.section-lbl{font-family:var(--font-title);font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:rgba(244,185,66,0.4);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.section-lbl::after{content:'';flex:1;height:1px;background:rgba(244,185,66,0.07);}
 
-/* ── HERO ── */
-.hero {
-  position: relative;
-  text-align: center;
-  padding: 3rem 2rem 2rem;
-  overflow: hidden;
-  z-index: 1;
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg,
-    rgba(10,127,168,0.15) 0%,
-    rgba(26,26,46,0) 60%);
-  pointer-events: none;
-}
-.hero-border {
-  max-width: 800px;
-  margin: 0 auto;
-  border: 2px solid rgba(244,185,66,0.3);
-  border-radius: 20px;
-  padding: 2rem 2rem 1.5rem;
-  background: linear-gradient(135deg,
-    rgba(22,33,62,0.9) 0%,
-    rgba(15,52,96,0.7) 50%,
-    rgba(22,33,62,0.9) 100%);
-  box-shadow:
-    0 0 40px rgba(56,198,244,0.15),
-    0 0 80px rgba(244,185,66,0.08),
-    inset 0 1px 0 rgba(244,185,66,0.2);
-  position: relative;
-}
-.hero-border::before, .hero-border::after {
-  content: '✦';
-  position: absolute;
-  color: var(--gold);
-  font-size: 1.2rem;
-  opacity: 0.7;
-}
-.hero-border::before { top: -12px; left: 50%; transform: translateX(-50%); }
-.hero-border::after { bottom: -12px; left: 50%; transform: translateX(-50%); }
+/* CARDS */
+.gem-card{background:linear-gradient(135deg,rgba(22,33,62,0.95),rgba(15,52,96,0.6));border:1px solid rgba(244,185,66,0.1);border-radius:14px;transition:all 0.2s;position:relative;overflow:hidden;}
+.gem-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--card-accent,linear-gradient(90deg,var(--gold),var(--gem-blue)));opacity:0.55;}
 
-.logo-container {
-  width: 90px;
-  height: 90px;
-  margin: 0 auto 1rem;
-  position: relative;
-  animation: glow-pulse 3s ease-in-out infinite;
-}
-.logo-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 0 20px rgba(56,198,244,0.6)) drop-shadow(0 0 40px rgba(244,185,66,0.4));
-}
-@keyframes glow-pulse {
-  0%, 100% { filter: drop-shadow(0 0 15px rgba(56,198,244,0.5)); }
-  50% { filter: drop-shadow(0 0 30px rgba(56,198,244,0.9)) drop-shadow(0 0 50px rgba(244,185,66,0.5)); }
-}
+/* MY GROUP PANEL */
+.my-group-panel{padding:0;}
+.mg-header{padding:1.25rem 1.5rem;border-bottom:1px solid rgba(244,185,66,0.08);display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.mg-emoji{font-size:2.5rem;}
+.mg-title{font-family:var(--font-title);font-size:1.1rem;font-weight:700;color:var(--gold-light);}
+.mg-meta{font-size:0.75rem;color:rgba(232,213,176,0.5);margin-top:3px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
 
-.hero-eyebrow {
-  font-family: var(--font-title);
-  font-size: 0.7rem;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--gem-blue);
-  margin-bottom: 8px;
-  opacity: 0.9;
-}
-.hero-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.4rem, 4vw, 2.2rem);
-  font-weight: 900;
-  background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gem-blue));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1.15;
-  margin-bottom: 6px;
-  text-shadow: none;
-  filter: drop-shadow(0 2px 8px rgba(244,185,66,0.3));
-}
-.hero-sub {
-  font-family: var(--font-title);
-  font-size: 0.8rem;
-  color: rgba(232,213,176,0.7);
-  letter-spacing: 2px;
-  margin-bottom: 1.2rem;
-}
-.hero-gems {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.gem-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-family: var(--font-title);
-  font-size: 0.65rem;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  padding: 4px 12px;
-  border-radius: 20px;
-  border: 1px solid currentColor;
-  opacity: 0.85;
-}
-.gp-aprendiz { color: #9CA3AF; border-color: rgba(156,163,175,0.4); background: rgba(156,163,175,0.08); }
-.gp-explorador { color: var(--gem-blue); border-color: rgba(56,198,244,0.3); background: rgba(56,198,244,0.08); }
-.gp-guardian { color: var(--gem-green); border-color: rgba(61,219,160,0.3); background: rgba(61,219,160,0.08); }
-.gp-maestro { color: var(--gold); border-color: rgba(244,185,66,0.4); background: rgba(244,185,66,0.1); }
+/* LEVEL GEMS */
+.level-gem{display:inline-flex;align-items:center;gap:4px;font-size:0.6rem;font-family:var(--font-title);letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:10px;}
+.lv-aprendiz{background:rgba(156,163,175,0.1);color:#9CA3AF;border:1px solid rgba(156,163,175,0.18);}
+.lv-explorador{background:rgba(56,198,244,0.1);color:var(--gem-blue);border:1px solid rgba(56,198,244,0.22);}
+.lv-guardian{background:rgba(61,219,160,0.1);color:var(--gem-green);border:1px solid rgba(61,219,160,0.22);}
+.lv-maestro{background:rgba(244,185,66,0.1);color:var(--gold);border:1px solid rgba(244,185,66,0.28);}
 
-/* ── NAV ── */
-.nav-wrap {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 1.25rem 1.5rem 0;
-  position: relative;
-  z-index: 1;
-}
-.nav {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  border-bottom: 1px solid rgba(244,185,66,0.15);
-  padding-bottom: 0;
-}
-.nav-btn {
-  font-family: var(--font-title);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  padding: 8px 18px;
-  border-radius: 8px 8px 0 0;
-  border: 1px solid transparent;
-  border-bottom: none;
-  background: transparent;
-  color: rgba(232,213,176,0.5);
-  cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
-  bottom: -1px;
-}
-.nav-btn:hover { color: var(--gold); background: rgba(244,185,66,0.05); }
-.nav-btn.active {
-  color: var(--gold);
-  background: rgba(22,33,62,0.95);
-  border-color: rgba(244,185,66,0.2);
-  border-bottom-color: rgba(22,33,62,0.95);
-}
-.nav-btn .nav-icon { margin-right: 5px; }
+/* PROGRESS */
+.progress-section{padding:1.25rem 1.5rem;border-bottom:1px solid rgba(244,185,66,0.06);}
+.progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.progress-label{font-family:var(--font-title);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:rgba(232,213,176,0.45);}
+.progress-pct{font-family:var(--font-display);font-size:1.4rem;font-weight:700;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.bar-track{background:rgba(255,255,255,0.04);border-radius:99px;height:8px;overflow:hidden;}
+.bar-fill{height:8px;border-radius:99px;transition:width 0.8s cubic-bezier(.34,1.56,.64,1);}
+.pts-big{font-family:var(--font-display);font-size:2.2rem;font-weight:700;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;margin-top:10px;}
+.pts-sub{font-family:var(--font-title);font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:rgba(232,213,176,0.35);text-align:center;margin-bottom:6px;}
 
-/* ── MAIN ── */
-.main {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 1.5rem 1.5rem 5rem;
-  position: relative;
-  z-index: 1;
-}
-.view { display: none; }
-.view.active { display: block; animation: fadeUp 0.4s ease; }
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: none; }
-}
+/* ROLES */
+.roles-section{padding:1rem 1.5rem;border-bottom:1px solid rgba(244,185,66,0.06);display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;}
+.role-card{background:rgba(176,111,232,0.06);border:1px solid rgba(176,111,232,0.14);border-radius:9px;padding:8px 10px;text-align:center;}
+.role-icon{font-size:1.2rem;margin-bottom:3px;}
+.role-title{font-family:var(--font-title);font-size:0.58rem;letter-spacing:1px;text-transform:uppercase;color:var(--gem-purple);margin-bottom:3px;}
+.role-name{font-size:0.8rem;font-weight:700;color:var(--parchment);}
+.role-empty{color:rgba(232,213,176,0.25);font-style:italic;font-size:0.75rem;}
 
-/* ── SECTION TITLE ── */
-.section-title {
-  font-family: var(--font-title);
-  font-size: 0.65rem;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: rgba(244,185,66,0.5);
-  margin-bottom: 14px;
-  margin-top: 4px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.section-title::after { content: ''; flex: 1; height: 1px; background: rgba(244,185,66,0.1); }
+/* TASKS LIST */
+.tasks-section{padding:1rem 1.5rem;}
+.task-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(244,185,66,0.05);}
+.task-item:last-child{border:none;}
+.task-icon{font-size:1.2rem;flex-shrink:0;width:28px;text-align:center;margin-top:1px;}
+.task-info{flex:1;}
+.task-name{font-size:0.85rem;font-weight:700;color:var(--parchment);}
+.task-page{font-size:0.62rem;font-family:var(--font-title);letter-spacing:0.8px;padding:1px 6px;border-radius:6px;background:rgba(244,185,66,0.07);border:1px solid rgba(244,185,66,0.12);color:var(--gold);margin-right:5px;}
+.task-status-row{display:flex;align-items:center;gap:8px;margin-top:4px;flex-wrap:wrap;}
+.status-chip{font-size:0.62rem;font-family:var(--font-title);letter-spacing:0.5px;padding:2px 8px;border-radius:10px;}
+.sc-done{background:rgba(61,219,160,0.1);color:var(--gem-green);border:1px solid rgba(61,219,160,0.18);}
+.sc-partial{background:rgba(244,156,66,0.1);color:var(--gem-amber);border:1px solid rgba(244,156,66,0.18);}
+.sc-pending{background:rgba(255,255,255,0.03);color:rgba(232,213,176,0.3);border:1px solid rgba(255,255,255,0.06);}
+.task-stars{color:var(--gold);font-size:0.9rem;letter-spacing:1px;}
+.task-comment{margin-top:6px;padding:8px 10px;background:rgba(56,198,244,0.05);border-left:2px solid rgba(56,198,244,0.3);border-radius:0 8px 8px 0;font-size:0.78rem;color:rgba(232,213,176,0.7);line-height:1.6;font-style:italic;}
+.teacher-comment-label{font-family:var(--font-title);font-size:0.58rem;letter-spacing:1px;text-transform:uppercase;color:var(--gem-blue);margin-bottom:3px;opacity:0.8;}
 
-/* ── CARD BASE ── */
-.gem-card {
-  background: linear-gradient(135deg, rgba(22,33,62,0.95), rgba(15,52,96,0.6));
-  border: 1px solid rgba(244,185,66,0.15);
-  border-radius: 14px;
-  transition: all 0.25s;
-  position: relative;
-  overflow: hidden;
-}
-.gem-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--card-accent, linear-gradient(90deg, var(--gold), var(--gem-blue)));
-  opacity: 0.6;
-}
-.gem-card:hover {
-  border-color: rgba(244,185,66,0.35);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(244,185,66,0.08);
-  transform: translateY(-2px);
-}
-.gem-card.selected {
-  border-color: rgba(56,198,244,0.5);
-  box-shadow: 0 0 0 2px rgba(56,198,244,0.15), 0 8px 32px rgba(0,0,0,0.4);
-}
+/* GENERAL NOTE */
+.general-note-section{padding:1rem 1.5rem;border-top:1px solid rgba(244,185,66,0.06);}
+.note-box{background:rgba(244,185,66,0.04);border:1px solid rgba(244,185,66,0.12);border-radius:10px;padding:12px 14px;font-size:0.82rem;color:rgba(232,213,176,0.75);line-height:1.7;white-space:pre-wrap;}
 
-/* ── GROUPS GRID ── */
-.groups-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 12px;
-}
-.group-card {
-  padding: 1.1rem;
-  cursor: pointer;
-}
-.group-top {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-.group-emoji-wrap {
-  width: 44px; height: 44px;
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.6rem;
-  background: rgba(244,185,66,0.08);
-  border: 1px solid rgba(244,185,66,0.15);
-  flex-shrink: 0;
-}
-.group-name {
-  font-family: var(--font-title);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--parchment);
-  line-height: 1.3;
-}
-.group-level { margin-top: 3px; }
+/* RANKING */
+.panel-card{border:1px solid rgba(244,185,66,0.12);border-radius:16px;padding:1.5rem;background:linear-gradient(135deg,rgba(22,33,62,0.95),rgba(15,52,96,0.6));box-shadow:0 8px 32px rgba(0,0,0,0.3);}
+.panel-title{font-family:var(--font-title);font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;display:flex;align-items:center;gap:8px;}
+.ranking-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(244,185,66,0.06);}
+.ranking-row:last-child{border:none;}
+.rank-pos{font-family:var(--font-display);font-size:1.3rem;width:34px;text-align:center;flex-shrink:0;}
+.rank-info{flex:1;}
+.rank-name{font-family:var(--font-title);font-size:0.85rem;font-weight:600;color:var(--parchment);}
+.rank-meta{font-size:0.7rem;color:rgba(232,213,176,0.45);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.rank-bar-wrap{width:90px;background:rgba(255,255,255,0.04);border-radius:99px;height:6px;flex-shrink:0;}
+.rank-bar{height:6px;border-radius:99px;transition:width 0.7s cubic-bezier(.34,1.56,.64,1);}
 
-.level-gem {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.62rem;
-  font-family: var(--font-title);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  padding: 2px 8px;
-  border-radius: 12px;
-}
-.lv-aprendiz  { background: rgba(156,163,175,0.12); color: #9CA3AF; border: 1px solid rgba(156,163,175,0.2); }
-.lv-explorador{ background: rgba(56,198,244,0.12); color: var(--gem-blue); border: 1px solid rgba(56,198,244,0.25); }
-.lv-guardian  { background: rgba(61,219,160,0.12); color: var(--gem-green); border: 1px solid rgba(61,219,160,0.25); }
-.lv-maestro   { background: rgba(244,185,66,0.12); color: var(--gold); border: 1px solid rgba(244,185,66,0.3); }
+/* NO GROUP MSG */
+.no-group{text-align:center;padding:2rem;font-family:var(--font-title);font-size:0.8rem;color:rgba(232,213,176,0.35);letter-spacing:1px;}
 
-.pts-bar-row { display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 5px; color: rgba(232,213,176,0.6); }
-.pts-val { font-weight: 800; color: var(--gold-light); font-size: 0.9rem; }
-.progress-track { background: rgba(255,255,255,0.06); border-radius: 99px; height: 5px; overflow: hidden; }
-.progress-fill { height: 5px; border-radius: 99px; transition: width 0.8s cubic-bezier(.34,1.56,.64,1); }
-.task-pips { display: flex; gap: 3px; margin-top: 8px; }
-.pip { flex: 1; height: 4px; border-radius: 99px; background: rgba(255,255,255,0.07); transition: background 0.3s; }
-.pip.done { background: var(--gem-green); }
-.pip.partial { background: var(--gem-amber); }
-
-/* ── ROLES STRIP ── */
-.roles-strip {
-  display: flex;
-  gap: 5px;
-  margin-top: 9px;
-  flex-wrap: wrap;
-}
-.role-tag {
-  font-size: 0.58rem;
-  font-family: var(--font-title);
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  padding: 2px 7px;
-  border-radius: 8px;
-  background: rgba(176,111,232,0.1);
-  border: 1px solid rgba(176,111,232,0.2);
-  color: var(--gem-purple);
-  cursor: default;
-}
-
-/* ── DETAIL PANEL ── */
-.detail-wrap {
-  margin-top: 14px;
-}
-.detail-card {
-  border: 1px solid rgba(56,198,244,0.25);
-  border-radius: 16px;
-  overflow: hidden;
-  background: linear-gradient(135deg, rgba(15,52,96,0.7), rgba(22,33,62,0.95));
-  box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 30px rgba(56,198,244,0.06);
-  animation: slideDown 0.3s ease;
-}
-@keyframes slideDown { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:none; } }
-
-.detail-header {
-  padding: 1.25rem 1.5rem;
-  background: linear-gradient(135deg, rgba(10,127,168,0.3), rgba(176,111,232,0.15));
-  border-bottom: 1px solid rgba(56,198,244,0.2);
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-.detail-emoji { font-size: 2.2rem; filter: drop-shadow(0 0 10px rgba(56,198,244,0.4)); }
-.detail-title { font-family: var(--font-title); font-size: 1.1rem; font-weight: 700; color: var(--gold-light); }
-.detail-meta { font-size: 0.75rem; color: rgba(232,213,176,0.6); margin-top: 3px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-
-/* ── TABS ── */
-.tabs {
-  display: flex;
-  border-bottom: 1px solid rgba(244,185,66,0.1);
-  padding: 0 1.25rem;
-}
-.tab {
-  font-family: var(--font-title);
-  font-size: 0.68rem;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  font-weight: 600;
-  padding: 10px 14px;
-  cursor: pointer;
-  color: rgba(232,213,176,0.4);
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  transition: all 0.2s;
-  background: none;
-  border-top: none; border-left: none; border-right: none;
-}
-.tab:hover { color: var(--gold); }
-.tab.active { color: var(--gold); border-bottom-color: var(--gold); }
-
-.tab-content { display: none; padding: 1.25rem 1.5rem; }
-.tab-content.active { display: block; }
-
-/* ── ROLES EDITOR ── */
-.roles-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px;
-  margin-bottom: 1rem;
-}
-.role-input-wrap { }
-.role-label {
-  font-family: var(--font-title);
-  font-size: 0.65rem;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--gem-purple);
-  margin-bottom: 5px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.role-input {
-  width: 100%;
-  font-family: var(--font-body);
-  font-size: 0.82rem;
-  padding: 7px 10px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(176,111,232,0.2);
-  border-radius: 8px;
-  color: #E8D5B0;
-  transition: border-color 0.2s;
-}
-.role-input:focus { outline: none; border-color: rgba(176,111,232,0.5); background: rgba(176,111,232,0.05); }
-
-/* ── TASK ROWS ── */
-.task-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(244,185,66,0.06);
-}
-.task-row:last-child { border: none; }
-.task-page-gem {
-  font-size: 0.6rem;
-  font-family: var(--font-title);
-  letter-spacing: 1px;
-  padding: 2px 7px;
-  border-radius: 8px;
-  background: rgba(244,185,66,0.08);
-  border: 1px solid rgba(244,185,66,0.15);
-  color: var(--gold);
-  white-space: nowrap;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-.task-body { flex: 1; }
-.task-name-text { font-size: 0.88rem; font-weight: 700; color: var(--parchment); }
-.task-controls { display: flex; align-items: center; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
-
-.status-sel {
-  font-family: var(--font-title);
-  font-size: 0.7rem;
-  letter-spacing: 0.5px;
-  padding: 4px 8px;
-  border-radius: 7px;
-  border: 1px solid rgba(244,185,66,0.2);
-  background: rgba(22,33,62,0.9);
-  color: #E8D5B0;
-  cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-}
-.status-sel:focus { outline: none; border-color: var(--gold); }
-
-.stars-row { display: flex; gap: 1px; }
-.star-btn {
-  font-size: 1.15rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: rgba(244,185,66,0.2);
-  transition: all 0.15s;
-  padding: 0 1px;
-  line-height: 1;
-}
-.star-btn.lit { color: var(--gold); text-shadow: 0 0 8px rgba(244,185,66,0.6); }
-.star-btn:hover { transform: scale(1.3); }
-
-.status-rune {
-  font-size: 0.65rem;
-  font-family: var(--font-title);
-  letter-spacing: 0.5px;
-  padding: 2px 9px;
-  border-radius: 10px;
-}
-.sr-done    { background: rgba(61,219,160,0.12); color: var(--gem-green); border: 1px solid rgba(61,219,160,0.2); }
-.sr-partial { background: rgba(244,156,66,0.12); color: var(--gem-amber); border: 1px solid rgba(244,156,66,0.2); }
-.sr-pending { background: rgba(255,255,255,0.04); color: rgba(232,213,176,0.4); border: 1px solid rgba(255,255,255,0.08); }
-
-.comment-area {
-  width: 100%;
-  margin-top: 7px;
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  padding: 8px 10px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(244,185,66,0.1);
-  border-radius: 8px;
-  color: #E8D5B0;
-  resize: none;
-  transition: border-color 0.2s;
-  line-height: 1.6;
-}
-.comment-area:focus { outline: none; border-color: rgba(244,185,66,0.3); background: rgba(244,185,66,0.03); }
-
-.gem-btn {
-  font-family: var(--font-title);
-  font-size: 0.68rem;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  padding: 6px 16px;
-  border-radius: 20px;
-  border: 1px solid rgba(244,185,66,0.3);
-  background: rgba(244,185,66,0.05);
-  color: var(--gold);
-  cursor: pointer;
-  margin-top: 7px;
-  transition: all 0.2s;
-}
-.gem-btn:hover { background: rgba(244,185,66,0.15); box-shadow: 0 0 12px rgba(244,185,66,0.2); }
-.ok-msg { display: none; font-size: 0.72rem; color: var(--gem-green); margin-top: 4px; font-family: var(--font-title); letter-spacing: 1px; }
-
-.note-textarea {
-  width: 100%;
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  padding: 12px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(244,185,66,0.12);
-  border-radius: 10px;
-  color: #E8D5B0;
-  resize: none;
-  line-height: 1.7;
-  transition: border-color 0.2s;
-}
-.note-textarea:focus { outline: none; border-color: rgba(244,185,66,0.3); }
-
-/* ── RANKING ── */
-.ranking-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(244,185,66,0.07);
-}
-.ranking-row:last-child { border: none; }
-.rank-pos {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  width: 36px;
-  text-align: center;
-  flex-shrink: 0;
-}
-.rank-info { flex: 1; }
-.rank-name { font-family: var(--font-title); font-size: 0.9rem; font-weight: 600; color: var(--parchment); }
-.rank-meta { font-size: 0.72rem; color: rgba(232,213,176,0.5); margin-top: 3px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.rank-bar-wrap { width: 100px; background: rgba(255,255,255,0.05); border-radius: 99px; height: 6px; flex-shrink: 0; }
-.rank-bar { height: 6px; border-radius: 99px; transition: width 0.8s cubic-bezier(.34,1.56,.64,1); }
-
-/* ── METRICS ── */
-.metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 10px;
-  margin-bottom: 1.5rem;
-}
-.metric-card {
-  background: linear-gradient(135deg, rgba(22,33,62,0.95), rgba(15,52,96,0.5));
-  border: 1px solid rgba(244,185,66,0.12);
-  border-radius: 12px;
-  padding: 1rem;
-  text-align: center;
-}
-.metric-val {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, var(--gold-light), var(--gold));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.metric-lbl { font-family: var(--font-title); font-size: 0.6rem; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(232,213,176,0.45); margin-top: 3px; }
-
-.insight-card {
-  display: flex;
-  gap: 12px;
-  padding: 12px 14px;
-  border-radius: 10px;
-  margin-bottom: 8px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  border: 1px solid rgba(255,255,255,0.05);
-}
-.ic-blue { background: rgba(56,198,244,0.06); border-color: rgba(56,198,244,0.12); color: rgba(56,198,244,0.9); }
-.ic-green { background: rgba(61,219,160,0.06); border-color: rgba(61,219,160,0.12); color: rgba(61,219,160,0.9); }
-.ic-amber { background: rgba(244,156,66,0.06); border-color: rgba(244,156,66,0.12); color: rgba(244,156,66,0.9); }
-.insight-icon { font-size: 1.2rem; flex-shrink: 0; }
-
-/* ── BADGES VIEW ── */
-.badges-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 12px;
-  margin-bottom: 1.5rem;
-}
-.badge-card {
-  padding: 1.5rem 1.25rem;
-  text-align: center;
-  cursor: default;
-}
-.badge-card:hover { transform: translateY(-4px); }
-.badge-icon { font-size: 2.8rem; margin-bottom: 10px; display: block; filter: drop-shadow(0 0 12px currentColor); }
-.badge-name { font-family: var(--font-title); font-size: 0.85rem; font-weight: 700; color: var(--parchment); margin-bottom: 6px; }
-.badge-desc { font-size: 0.75rem; color: rgba(232,213,176,0.5); line-height: 1.5; }
-.badge-pts { font-family: var(--font-title); font-size: 0.65rem; letter-spacing: 1px; margin-top: 8px; padding: 3px 10px; border-radius: 10px; display: inline-block; }
-
-.points-legend {
-  border: 1px solid rgba(244,185,66,0.15);
-  border-radius: 14px;
-  padding: 1.25rem;
-  background: rgba(244,185,66,0.03);
-}
-.legend-title {
-  font-family: var(--font-title);
-  font-size: 0.72rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 10px;
-}
-.legend-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 7px 0;
-  border-bottom: 1px solid rgba(244,185,66,0.07);
-  font-size: 0.8rem;
-  color: rgba(232,213,176,0.7);
-}
-.legend-row:last-child { border: none; }
-.pts-rune {
-  background: rgba(244,185,66,0.1);
-  border: 1px solid rgba(244,185,66,0.2);
-  color: var(--gold);
-  font-family: var(--font-title);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  padding: 2px 9px;
-  border-radius: 10px;
-}
-
-/* ── TECNICAS VIEW ── */
-.tecnica-card {
-  padding: 1.1rem 1.25rem;
-  margin-bottom: 10px;
-}
-.tecnica-name {
-  font-family: var(--font-title);
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--gold-light);
-  margin-bottom: 4px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.tecnica-desc { font-size: 0.8rem; color: rgba(232,213,176,0.6); line-height: 1.6; }
-
-/* ── PANEL CARD (ranking / resumen) ── */
-.panel-card {
-  border: 1px solid rgba(244,185,66,0.15);
-  border-radius: 16px;
-  padding: 1.5rem;
-  background: linear-gradient(135deg, rgba(22,33,62,0.95), rgba(15,52,96,0.6));
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-}
-.panel-title {
-  font-family: var(--font-title);
-  font-size: 0.72rem;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 1.25rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* ── ORNAMENTAL DIVIDER ── */
-.ornament {
-  text-align: center;
-  color: rgba(244,185,66,0.2);
-  font-size: 0.9rem;
-  letter-spacing: 6px;
-  margin: 1rem 0;
-}
-
-/* ── RESPONSIVE ── */
-@media (max-width: 600px) {
-  .hero { padding: 1.5rem 1rem 1.5rem; }
-  .main, .nav-wrap { padding-left: 1rem; padding-right: 1rem; }
-  .rank-bar-wrap { display: none; }
-  .logo-container { width: 70px; height: 70px; }
-}
-
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: rgba(22,33,62,0.5); }
-::-webkit-scrollbar-thumb { background: rgba(244,185,66,0.2); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(244,185,66,0.4); }
+@media(max-width:600px){.main,.nav-wrap{padding-left:1rem;padding-right:1rem;}.rank-bar-wrap{display:none;}.hero{padding:1.5rem 1rem 1rem;}}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:rgba(22,33,62,0.5);}::-webkit-scrollbar-thumb{background:rgba(244,185,66,0.18);border-radius:3px;}
 </style>
 </head>
 <body>
 
 <!-- HERO -->
-<header class="hero" role="banner">
+<header class="hero">
   <div class="hero-border">
-    <div class="logo-container">
-      <img src="El_Secreto_de_las_Gemas-2.png" alt="Logo El Secreto de las Gemas" onerror="this.style.fontSize='3rem';this.style.lineHeight='90px';this.parentNode.innerHTML='🔮'">
+    <div class="logo-wrap">
+      <img src="El_Secreto_de_las_Gemas-2.png" alt="Logo El Secreto de las Gemas" onerror="this.parentNode.innerHTML='<span style=&quot;font-size:3rem;display:block;text-align:center&quot;>🔮</span>'">
     </div>
-    <p class="hero-eyebrow">Panel del Docente · 4.º de Primaria</p>
+    <p class="hero-eyebrow">Los Gallardos 2050 · 4.º de Primaria</p>
     <h1 class="hero-title">El Secreto de las Gemas</h1>
-    <p class="hero-sub">Los Gallardos 2050 · Aprendizaje Cooperativo</p>
-    <div class="hero-gems">
-      <span class="gem-pill gp-aprendiz">⬥ Aprendiz de Gema</span>
-      <span class="gem-pill gp-explorador">◆ Explorador/a</span>
-      <span class="gem-pill gp-guardian">❖ Guardián/a</span>
-      <span class="gem-pill gp-maestro">✦ Maestro/a de las Gemas</span>
-    </div>
+    <p class="hero-sub">Aprendizaje Cooperativo · Misión Activa</p>
+    <div class="selector-title">Selecciona tu equipo para ver tu progreso</div>
+    <div class="groups-selector" id="groups-selector"></div>
   </div>
 </header>
 
 <!-- NAV -->
-<nav class="nav-wrap" aria-label="Secciones">
+<nav class="nav-wrap">
   <div class="nav">
-    <button class="nav-btn active" onclick="showView('grupos',this)" aria-current="page">
-      <span class="nav-icon">⚔️</span> Grupos
-    </button>
-    <button class="nav-btn" onclick="showView('ranking',this)">
-      <span class="nav-icon">🏆</span> Ranking
-    </button>
-    <button class="nav-btn" onclick="showView('resumen',this)">
-      <span class="nav-icon">🔮</span> Resumen
-    </button>
-    <button class="nav-btn" onclick="showView('tecnicas',this)">
-      <span class="nav-icon">📜</span> Técnicas
-    </button>
-    <button class="nav-btn" onclick="showView('insignias',this)">
-      <span class="nav-icon">💎</span> Gemas
-    </button>
+    <button class="nav-btn active" onclick="showView('migrupo',this)">💎 Mi Grupo</button>
+    <button class="nav-btn" onclick="showView('ranking',this)">🏆 Ranking</button>
   </div>
 </nav>
 
 <!-- MAIN -->
 <main class="main">
 
-  <!-- GRUPOS -->
-  <div id="view-grupos" class="view active">
-    <div class="section-title">Equipos de aventureros</div>
-    <div class="groups-grid" id="groups-grid"></div>
-    <div id="detail-panel" class="detail-wrap"></div>
+  <!-- MI GRUPO -->
+  <div id="view-migrupo" class="view active">
+    <div id="my-group-content">
+      <div class="no-group">✦ · · · Selecciona tu equipo arriba · · · ✦</div>
+    </div>
   </div>
 
   <!-- RANKING -->
@@ -784,423 +171,170 @@ body::before {
     </div>
   </div>
 
-  <!-- RESUMEN -->
-  <div id="view-resumen" class="view">
-    <div class="panel-card">
-      <div class="panel-title">🔮 Resumen de la Aventura</div>
-      <div class="metrics-grid" id="metrics-grid"></div>
-      <div class="section-title">Observaciones del oráculo</div>
-      <div id="insights-list"></div>
-    </div>
-  </div>
-
-  <!-- TÉCNICAS -->
-  <div id="view-tecnicas" class="view">
-    <div class="panel-card">
-      <div class="panel-title">📜 Técnicas de Aprendizaje Cooperativo</div>
-      <div id="tecnicas-list"></div>
-    </div>
-  </div>
-
-  <!-- INSIGNIAS / GEMAS -->
-  <div id="view-insignias" class="view">
-    <div class="panel-card">
-      <div class="panel-title">💎 Sistema de Gemas y Puntos</div>
-      <div class="badges-grid" id="badges-grid"></div>
-      <div class="ornament">✦ · · · ✦ · · · ✦</div>
-      <div class="points-legend" id="points-legend"></div>
-    </div>
-  </div>
-
 </main>
 
+<script src="shared.js"></script>
 <script>
-/* ── DATA ── */
-const TASKS = [
-  {id:'t0', name:'Portada y nombre del equipo', page:'Portada'},
-  {id:'t1', name:'Plano de calles y ángulos', page:'Pág. 1'},
-  {id:'t2', name:'Mapa de profesiones y sectores', page:'Pág. 2'},
-  {id:'t3', name:'Red de energía sostenible', page:'Pág. 3'},
-  {id:'t4', name:'Agenda de la ciudad', page:'Pág. 4'},
-  {id:'t5', name:'Cartel publicitario', page:'Pág. 5'},
-  {id:'t6', name:'Exposición oral', page:'Final'},
-];
+let selectedGroup = localStorage.getItem('student_selected_group') || null;
 
-const ROLES = ['Coordinador/a','Secretari@','Moderador/a','Portavoz'];
-const ROLE_ICONS = ['⚔️','📜','⚖️','📣'];
-
-const ACCENTS = [
-  'linear-gradient(90deg,#38C6F4,#B06FE8)',
-  'linear-gradient(90deg,#F4B942,#F4606C)',
-  'linear-gradient(90deg,#3DDBA0,#38C6F4)',
-  'linear-gradient(90deg,#B06FE8,#F4606C)',
-  'linear-gradient(90deg,#F49C42,#F4B942)',
-  'linear-gradient(90deg,#F4606C,#B06FE8)',
-  'linear-gradient(90deg,#3DDBA0,#B06FE8)',
-];
-const SOLID = ['#38C6F4','#F4B942','#3DDBA0','#B06FE8','#F49C42','#F4606C','#3DDBA0'];
-
-const GROUPS_INIT = [
-  {id:'g0', name:'Los Pingüin@s',           emoji:'🐧'},
-  {id:'g1', name:'Los Reyes/Reinas del Flow',emoji:'👑'},
-  {id:'g2', name:'Las Llamas del Flow',      emoji:'🔥'},
-  {id:'g3', name:'Los Listill@s',            emoji:'🧠'},
-  {id:'g4', name:'L@s Andaluces/as',         emoji:'🌻'},
-  {id:'g5', name:'L@s Sherifs',              emoji:'⭐'},
-  {id:'g6', name:'L@s Casas',               emoji:'🏠'},
-];
-
-const TECNICAS = [
-  {icon:'🧩', name:'Puzzle de Aronson', desc:'Cada miembro del equipo se especializa en una parte del contenido y luego enseña lo aprendido al resto del grupo. Ideal para repartir las secciones del Cuaderno de Urbanismo.'},
-  {icon:'🤔', name:'Pensar–Compartir–Exponer', desc:'Primero piensan individualmente, luego comparten en pareja y finalmente exponen al grupo. Perfecto para las preguntas de reflexión del proyecto.'},
-  {icon:'🔢', name:'Numeración 1-2-3-4', desc:'Cada miembro tiene un número. El docente llama a un número al azar para responder por todo el equipo. Mantiene la responsabilidad individual.'},
-  {icon:'📋', name:'Lápices al Centro', desc:'Se colocan los lápices en el centro mientras se debate y se cogen para escribir cuando se llega a un acuerdo. Favorece la escucha activa.'},
-  {icon:'🎯', name:'Folio Giratorio', desc:'Un folio circula entre los miembros; cada uno añade su aportación por turnos. Útil para lluvia de ideas sobre el diseño de la ciudad.'},
-  {icon:'🃏', name:'Co-op Co-op', desc:'Los equipos eligen subtemas, cada miembro investiga una parte y luego se reúnen para construir la presentación final conjunta.'},
-];
-
-/* ── STORAGE ── */
-function loadData() {
-  try { return JSON.parse(localStorage.getItem('gemas_v1')) || initData(); }
-  catch(e) { return initData(); }
-}
-function initData() {
-  const data = GROUPS_INIT.map((g,i) => ({
-    ...g,
-    accent: ACCENTS[i], solid: SOLID[i],
-    generalNote: '',
-    roles: {coord:'', secre:'', moder:'', porta:''},
-    tasks: TASKS.map(t => ({id:t.id, status:'pending', stars:0, comment:''}))
-  }));
-  saveData(data); return data;
-}
-function saveData(d) { localStorage.setItem('gemas_v1', JSON.stringify(d)); }
-
-/* ── LEVELS ── */
-const LEVELS = [
-  {min:280, label:'Maestro/a de las Gemas', cls:'lv-maestro', icon:'✦', color:'#F4B942'},
-  {min:160, label:'Guardián/a', cls:'lv-guardian', icon:'❖', color:'#3DDBA0'},
-  {min:70,  label:'Explorador/a', cls:'lv-explorador', icon:'◆', color:'#38C6F4'},
-  {min:0,   label:'Aprendiz de Gema', cls:'lv-aprendiz', icon:'⬥', color:'#9CA3AF'},
-];
-function getLevel(pts) { return LEVELS.find(l => pts >= l.min); }
-function getPoints(g) {
-  return g.tasks.reduce((s,t) => {
-    if(t.status==='done') return s + Math.max(1,t.stars||1)*10;
-    if(t.status==='partial') return s + 5;
-    return s;
-  },0);
-}
-function countDone(g) { return g.tasks.filter(t=>t.status==='done').length; }
-
-/* ── RENDER GROUPS ── */
-function renderGroups() {
+/* ── SELECTOR DE GRUPO ── */
+function renderSelector(){
   const groups = loadData();
-  document.getElementById('groups-grid').innerHTML = groups.map((g,i) => {
-    const pts  = getPoints(g);
-    const lv   = getLevel(pts);
-    const done = countDone(g);
-    const pct  = Math.round((done/TASKS.length)*100);
-    const roleNames = [g.roles?.coord, g.roles?.secre, g.roles?.moder, g.roles?.porta].filter(Boolean);
-    return `
-    <article class="gem-card group-card" id="card-${g.id}"
-      style="--card-accent:${g.accent}"
-      onclick="openGroup('${g.id}')"
-      tabindex="0" onkeydown="if(event.key==='Enter')openGroup('${g.id}')"
-      aria-label="Ver detalles de ${g.name}">
-      <div class="group-top">
-        <div class="group-emoji-wrap">${g.emoji}</div>
-        <div>
-          <div class="group-name">${g.name}</div>
-          <div class="group-level"><span class="level-gem ${lv.cls}">${lv.icon} ${lv.label}</span></div>
-        </div>
-      </div>
-      <div class="pts-bar-row">
-        <span>${done}/${TASKS.length} misiones</span>
-        <span class="pts-val">${pts} pts</span>
-      </div>
-      <div class="progress-track">
-        <div class="progress-fill" style="width:${pct}%;background:${g.accent}"></div>
-      </div>
-      <div class="task-pips" aria-hidden="true">
-        ${g.tasks.map(t=>`<div class="pip ${t.status==='done'?'done':t.status==='partial'?'partial':''}"></div>`).join('')}
-      </div>
-      ${roleNames.length ? `<div class="roles-strip">${roleNames.map(r=>`<span class="role-tag">${r}</span>`).join('')}</div>` : ''}
-    </article>`;
-  }).join('');
+  document.getElementById('groups-selector').innerHTML = groups.map(g => `
+    <button class="sel-btn ${selectedGroup===g.id?'active':''}" onclick="selectGroup('${g.id}')">
+      ${g.emoji} ${g.name}
+    </button>`).join('');
 }
 
-/* ── OPEN GROUP DETAIL ── */
-function openGroup(gid) {
-  const groups = loadData();
-  const g = groups.find(x=>x.id===gid);
-  document.querySelectorAll('.group-card').forEach(c=>c.classList.remove('selected'));
-  document.getElementById('card-'+gid)?.classList.add('selected');
-  const pts = getPoints(g); const lv = getLevel(pts);
+function selectGroup(gid){
+  selectedGroup = gid;
+  localStorage.setItem('student_selected_group', gid);
+  renderSelector();
+  renderMyGroup();
+}
 
-  const panel = document.getElementById('detail-panel');
-  panel.innerHTML = `
-  <div class="detail-card" role="region" aria-label="Detalle de ${g.name}">
-    <div class="detail-header" style="background:linear-gradient(135deg,${g.solid}22,${g.solid}0a)">
-      <span class="detail-emoji" style="color:${g.solid}">${g.emoji}</span>
+/* ── MI GRUPO ── */
+function renderMyGroup(){
+  if(!selectedGroup){ document.getElementById('my-group-content').innerHTML='<div class="no-group">✦ · · · Selecciona tu equipo arriba · · · ✦</div>'; return; }
+  const groups = loadData();
+  const g = groups.find(x=>x.id===selectedGroup);
+  if(!g){ return; }
+  const pts = getPoints(g), lv = getLevel(pts), done = countDone(g);
+  const pct = Math.round((done/TASKS.length)*100);
+
+  // roles
+  const roleDefs = [
+    {key:'coord',lbl:'Coordinador/a',icon:'⚔️'},
+    {key:'secre',lbl:'Secretari@',icon:'📜'},
+    {key:'moder',lbl:'Moderador/a',icon:'⚖️'},
+    {key:'porta',lbl:'Portavoz',icon:'📣'},
+  ];
+  const hasRoles = roleDefs.some(r=>g.roles?.[r.key]);
+  const hasNote = g.generalNote && g.generalNote.trim().length > 0;
+
+  document.getElementById('my-group-content').innerHTML = `
+  <div class="gem-card my-group-panel" style="--card-accent:${g.accent}">
+
+    <!-- CABECERA -->
+    <div class="mg-header" style="background:linear-gradient(135deg,${g.solid}18,${g.solid}06)">
+      <span class="mg-emoji" style="filter:drop-shadow(0 0 12px ${g.solid}88)">${g.emoji}</span>
       <div>
-        <div class="detail-title">${g.name}</div>
-        <div class="detail-meta">
+        <div class="mg-title">${g.name}</div>
+        <div class="mg-meta">
           <span class="level-gem ${lv.cls}">${lv.icon} ${lv.label}</span>
-          <span>${pts} puntos</span>
-          <span>${countDone(g)}/${TASKS.length} misiones</span>
+          <span>${pts} puntos · ${done}/${TASKS.length} misiones</span>
         </div>
       </div>
     </div>
-    <div class="tabs" role="tablist">
-      <button class="tab active" role="tab" onclick="switchTab(event,'dtasks-${gid}','${gid}')">⚔️ Misiones</button>
-      <button class="tab" role="tab" onclick="switchTab(event,'droles-${gid}','${gid}')">👥 Roles</button>
-      <button class="tab" role="tab" onclick="switchTab(event,'dnotes-${gid}','${gid}')">📜 Nota general</button>
+
+    <!-- PROGRESO -->
+    <div class="progress-section">
+      <div class="progress-header">
+        <span class="progress-label">Progreso de la misión</span>
+        <span class="progress-pct">${pct}%</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${g.accent}"></div></div>
+      <div class="pts-big">${pts}</div>
+      <div class="pts-sub">gemas conquistadas</div>
     </div>
 
-    <!-- TAREAS -->
-    <div id="dtasks-${gid}" class="tab-content active">
-      ${g.tasks.map(t => {
+    <!-- ROLES -->
+    ${hasRoles ? `
+    <div class="section-lbl" style="padding:0.8rem 1.5rem 0;margin-bottom:0">Roles del equipo</div>
+    <div class="roles-section">
+      ${roleDefs.map(r=>`
+      <div class="role-card">
+        <div class="role-icon">${r.icon}</div>
+        <div class="role-title">${r.lbl}</div>
+        ${g.roles?.[r.key]
+          ? `<div class="role-name">${g.roles[r.key]}</div>`
+          : `<div class="role-empty">—</div>`}
+      </div>`).join('')}
+    </div>` : ''}
+
+    <!-- MISIONES -->
+    <div class="section-lbl" style="padding:0.8rem 1.5rem 0;margin-bottom:0">Estado de las misiones</div>
+    <div class="tasks-section">
+      ${g.tasks.map(t=>{
         const task = TASKS.find(x=>x.id===t.id);
-        const scCls = t.status==='done'?'sr-done':t.status==='partial'?'sr-partial':'sr-pending';
-        const scLbl = t.status==='done'?'✅ Completa':t.status==='partial'?'⏳ En progreso':'◻ Pendiente';
-        return `<div class="task-row">
-          <span class="task-page-gem">${task.page}</span>
-          <div class="task-body">
-            <div class="task-name-text">${task.name}</div>
-            <div class="task-controls">
-              <select class="status-sel" aria-label="Estado" onchange="updateStatus('${gid}','${t.id}',this.value)">
-                <option value="pending"  ${t.status==='pending'?'selected':''}>Pendiente</option>
-                <option value="partial"  ${t.status==='partial'?'selected':''}>En progreso</option>
-                <option value="done"     ${t.status==='done'?'selected':''}>Completa</option>
-              </select>
-              <div class="stars-row" role="group" aria-label="Estrellas">
-                ${[1,2,3].map(s=>`<button class="star-btn ${(t.stars||0)>=s?'lit':''}"
-                  aria-label="${s} estrella${s>1?'s':''}"
-                  onclick="setStars('${gid}','${t.id}',${s})">★</button>`).join('')}
-              </div>
-              <span class="status-rune ${scCls}">${scLbl}</span>
+        const isDone = t.status==='done', isPartial = t.status==='partial';
+        const scCls = isDone?'sc-done':isPartial?'sc-partial':'sc-pending';
+        const scLbl = isDone?'✅ Completa':isPartial?'⏳ En progreso':'◻ Pendiente';
+        const icon = isDone?'✅':isPartial?'⏳':'🔒';
+        const starsStr = t.stars ? '★'.repeat(t.stars)+'☆'.repeat(3-t.stars) : '';
+        return `<div class="task-item">
+          <div class="task-icon">${icon}</div>
+          <div class="task-info">
+            <div class="task-name">
+              <span class="task-page">${task.page}</span>${task.name}
             </div>
-            <textarea class="comment-area" rows="2"
-              placeholder="Feedback para el equipo…"
-              id="cmt-${gid}-${t.id}">${t.comment||''}</textarea>
-            <button class="gem-btn" onclick="saveComment('${gid}','${t.id}')">Guardar</button>
-            <div class="ok-msg" id="ok-${gid}-${t.id}">✦ Grabado en las crónicas</div>
+            <div class="task-status-row">
+              <span class="status-chip ${scCls}">${scLbl}</span>
+              ${starsStr ? `<span class="task-stars">${starsStr}</span>` : ''}
+              ${isDone && t.stars ? `<span style="font-size:0.7rem;color:rgba(244,185,66,0.6);font-family:var(--font-title)">${t.stars*10} pts</span>` : ''}
+            </div>
+            ${t.comment ? `
+            <div class="task-comment">
+              <div class="teacher-comment-label">💬 Comentario del maestro/a</div>
+              ${t.comment}
+            </div>` : ''}
           </div>
         </div>`;
       }).join('')}
     </div>
 
-    <!-- ROLES -->
-    <div id="droles-${gid}" class="tab-content">
-      <p style="font-size:0.78rem;color:rgba(232,213,176,0.5);margin-bottom:12px;font-family:var(--font-title);letter-spacing:0.5px">
-        Asigna los roles cooperativos del equipo para esta misión
-      </p>
-      <div class="roles-grid">
-        ${[
-          {key:'coord', label:'Coordinador/a', icon:'⚔️'},
-          {key:'secre', label:'Secretari@',    icon:'📜'},
-          {key:'moder', label:'Moderador/a',   icon:'⚖️'},
-          {key:'porta', label:'Portavoz',      icon:'📣'},
-        ].map(r=>`
-        <div class="role-input-wrap">
-          <div class="role-label">${r.icon} ${r.label}</div>
-          <input type="text" class="role-input"
-            placeholder="Nombre del alumno/a"
-            id="role-${gid}-${r.key}"
-            value="${g.roles?.[r.key]||''}"
-          />
-        </div>`).join('')}
-      </div>
-      <button class="gem-btn" onclick="saveRoles('${gid}')">✦ Guardar roles</button>
-      <div class="ok-msg" id="rok-${gid}">✦ Roles grabados en el grimorio</div>
-    </div>
-
     <!-- NOTA GENERAL -->
-    <div id="dnotes-${gid}" class="tab-content">
-      <p style="font-size:0.78rem;color:rgba(232,213,176,0.5);margin-bottom:10px;font-family:var(--font-title);letter-spacing:0.5px">
-        Valoración general: actitud, trabajo en equipo, evolución…
-      </p>
-      <textarea class="note-textarea" rows="6"
-        placeholder="Escribe aquí tu valoración general del equipo…"
-        id="gnote-${gid}">${g.generalNote||''}</textarea>
-      <button class="gem-btn" onclick="saveGeneralNote('${gid}')">✦ Guardar crónica</button>
-      <div class="ok-msg" id="gok-${gid}">✦ Crónica guardada</div>
-    </div>
+    ${hasNote ? `
+    <div class="general-note-section">
+      <div class="section-lbl" style="margin-bottom:8px">📜 Valoración general del maestro/a</div>
+      <div class="note-box">${g.generalNote}</div>
+    </div>` : ''}
+
   </div>`;
-  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
-
-/* ── TAB SWITCH ── */
-function switchTab(e, tabId, gid) {
-  const wrapper = e.target.closest('[role="region"]');
-  wrapper.querySelectorAll('.tab').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false');});
-  wrapper.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-  e.target.classList.add('active'); e.target.setAttribute('aria-selected','true');
-  document.getElementById(tabId).classList.add('active');
-}
-
-/* ── UPDATES ── */
-function updateStatus(gid,tid,val){
-  const groups=loadData();
-  groups.find(g=>g.id===gid).tasks.find(t=>t.id===tid).status=val;
-  saveData(groups); renderGroups(); openGroup(gid);
-}
-function setStars(gid,tid,val){
-  const groups=loadData();
-  const t=groups.find(g=>g.id===gid).tasks.find(t=>t.id===tid);
-  t.stars=(t.stars===val)?0:val;
-  saveData(groups); renderGroups(); openGroup(gid);
-}
-function saveComment(gid,tid){
-  const groups=loadData();
-  const t=groups.find(g=>g.id===gid).tasks.find(t=>t.id===tid);
-  const el=document.getElementById('cmt-'+gid+'-'+tid);
-  if(el){t.comment=el.value;saveData(groups);}
-  flashOk('ok-'+gid+'-'+tid);
-}
-function saveRoles(gid){
-  const groups=loadData();
-  const g=groups.find(x=>x.id===gid);
-  ['coord','secre','moder','porta'].forEach(k=>{
-    const el=document.getElementById('role-'+gid+'-'+k);
-    if(el){g.roles=g.roles||{};g.roles[k]=el.value;}
-  });
-  saveData(groups); renderGroups(); flashOk('rok-'+gid);
-}
-function saveGeneralNote(gid){
-  const groups=loadData();
-  const g=groups.find(x=>x.id===gid);
-  const el=document.getElementById('gnote-'+gid);
-  if(el){g.generalNote=el.value;saveData(groups);}
-  flashOk('gok-'+gid);
-}
-function flashOk(id){
-  const el=document.getElementById(id);
-  if(!el)return;
-  el.style.display='block';
-  setTimeout(()=>el.style.display='none',2400);
 }
 
 /* ── RANKING ── */
 function renderRanking(){
-  const groups=loadData();
-  const sorted=[...groups].sort((a,b)=>getPoints(b)-getPoints(a));
-  const maxPts=Math.max(1,getPoints(sorted[0]));
+  const groups=loadData(),sorted=[...groups].sort((a,b)=>getPoints(b)-getPoints(a)),maxPts=Math.max(1,getPoints(sorted[0]));
   const medals=['🥇','🥈','🥉'];
   document.getElementById('ranking-list').innerHTML=sorted.map((g,i)=>{
-    const pts=getPoints(g); const lv=getLevel(pts);
-    const pct=Math.round((pts/maxPts)*100);
-    return `<div class="ranking-row">
+    const pts=getPoints(g),lv=getLevel(pts),pct=Math.round((pts/maxPts)*100);
+    const isMe = g.id===selectedGroup;
+    return `<div class="ranking-row" style="${isMe?'background:rgba(244,185,66,0.06);border-radius:10px;padding-left:8px;':''}">
       <div class="rank-pos" style="color:${i<3?['#FFD700','#C0C0C0','#CD7F32'][i]:g.solid}">${medals[i]||i+1}</div>
-      <div style="font-size:1.6rem;filter:drop-shadow(0 0 8px ${g.solid}88)">${g.emoji}</div>
+      <div style="font-size:1.4rem;filter:drop-shadow(0 0 6px ${g.solid}66)">${g.emoji}</div>
       <div class="rank-info">
-        <div class="rank-name">${g.name}</div>
+        <div class="rank-name">${g.name}${isMe?' <span style="font-size:0.62rem;color:var(--gold);font-family:var(--font-title);letter-spacing:1px">← Mi equipo</span>':''}</div>
         <div class="rank-meta">
           <span class="level-gem ${lv.cls}">${lv.icon} ${lv.label}</span>
-          <span>${pts} pts</span>
-          <span>${countDone(g)}/${TASKS.length} misiones</span>
+          <span>${pts} pts</span><span>${countDone(g)}/${TASKS.length} misiones</span>
         </div>
       </div>
-      <div class="rank-bar-wrap">
-        <div class="rank-bar" style="width:${pct}%;background:${g.accent}"></div>
-      </div>
+      <div class="rank-bar-wrap"><div class="rank-bar" style="width:${pct}%;background:${g.accent}"></div></div>
     </div>`;
   }).join('');
 }
 
-/* ── RESUMEN ── */
-function renderResumen(){
-  const groups=loadData();
-  const total=groups.length*TASKS.length;
-  const done=groups.reduce((s,g)=>s+countDone(g),0);
-  const totalPts=groups.reduce((s,g)=>s+getPoints(g),0);
-  const avgPts=Math.round(totalPts/groups.length);
-  const pct=Math.round((done/total)*100);
-  const advanced=groups.filter(g=>getLevel(getPoints(g)).min>=70).length;
-  const allDone=groups.filter(g=>countDone(g)===TASKS.length).length;
-
-  document.getElementById('metrics-grid').innerHTML=[
-    {val:pct+'%', lbl:'Progreso'},
-    {val:done, lbl:'Misiones completas'},
-    {val:avgPts, lbl:'Puntos medios'},
-    {val:advanced, lbl:'Grupos avanzados'},
-    {val:allDone, lbl:'Proyectos listos'},
-    {val:groups.length, lbl:'Equipos'},
-  ].map(m=>`<div class="metric-card"><div class="metric-val">${m.val}</div><div class="metric-lbl">${m.lbl}</div></div>`).join('');
-
-  const sorted=[...groups].sort((a,b)=>getPoints(b)-getPoints(a));
-  const leader=sorted[0]; const slower=sorted[sorted.length-1];
-  const allDoneGroups=groups.filter(g=>countDone(g)===TASKS.length);
-  document.getElementById('insights-list').innerHTML=`
-    <div class="insight-card ic-green">
-      <span class="insight-icon">✦</span>
-      <div><strong>${leader.name}</strong> lidera la aventura con ${getPoints(leader)} puntos y ${countDone(leader)} misiones. ¡Un equipo de leyenda!</div>
-    </div>
-    <div class="insight-card ic-amber">
-      <span class="insight-icon">⚡</span>
-      <div><strong>${slower.name}</strong> necesita apoyo. Su gema aún puede brillar más esta semana.</div>
-    </div>
-    <div class="insight-card ic-blue">
-      <span class="insight-icon">🔮</span>
-      <div>${allDone>0?allDone+' equipo(s) han completado todas las misiones y están listos para la gran exposición oral.':'Los grupos avanzan hacia la revelación final del secreto. ¡Ánimo a tod@s!'}</div>
-    </div>`;
-}
-
-/* ── TÉCNICAS ── */
-function renderTecnicas(){
-  document.getElementById('tecnicas-list').innerHTML=TECNICAS.map(t=>`
-    <div class="gem-card tecnica-card">
-      <div class="tecnica-name"><span style="font-size:1.3rem">${t.icon}</span>${t.name}</div>
-      <div class="tecnica-desc">${t.desc}</div>
-    </div>`).join('');
-}
-
-/* ── INSIGNIAS ── */
-function renderInsignias(){
-  const badgesData=[
-    {icon:'⬥', name:'Aprendiz de Gema', cls:'lv-aprendiz', col:'#9CA3AF',
-     desc:'La aventura comienza. Los cimientos del proyecto se están poniendo.', pts:'0–69 pts'},
-    {icon:'◆', name:'Explorador/a', cls:'lv-explorador', col:'#38C6F4',
-     desc:'La gema empieza a brillar. El equipo avanza con paso firme.', pts:'70–159 pts'},
-    {icon:'❖', name:'Guardián/a de la Gema', cls:'lv-guardian', col:'#3DDBA0',
-     desc:'La gema está pulida y protegida. Dominio del diseño cooperativo.', pts:'160–279 pts'},
-    {icon:'✦', name:'Maestro/a de las Gemas', cls:'lv-maestro', col:'#F4B942',
-     desc:'El secreto ha sido revelado. Proyecto completo y brillante.', pts:'280+ pts'},
-  ];
-  document.getElementById('badges-grid').innerHTML=badgesData.map(b=>`
-    <div class="gem-card badge-card" style="--card-accent:linear-gradient(90deg,${b.col},${b.col}88)">
-      <span class="badge-icon" style="color:${b.col}">${b.icon}</span>
-      <div class="badge-name"><span class="level-gem ${b.cls}">${b.icon} ${b.name}</span></div>
-      <p class="badge-desc">${b.desc}</p>
-      <span class="badge-pts" style="background:${b.col}18;border:1px solid ${b.col}33;color:${b.col}">${b.pts}</span>
-    </div>`).join('');
-
-  document.getElementById('points-legend').innerHTML=`
-    <div class="legend-title">✦ Cómo se ganan los puntos</div>
-    <div class="legend-row"><span>Misión completada (⭐)</span><span class="pts-rune">10 pts</span></div>
-    <div class="legend-row"><span>Misión completada (⭐⭐)</span><span class="pts-rune">20 pts</span></div>
-    <div class="legend-row"><span>Misión completada (⭐⭐⭐)</span><span class="pts-rune">30 pts</span></div>
-    <div class="legend-row"><span>Misión en progreso</span><span class="pts-rune">5 pts</span></div>
-    <div class="legend-row"><span>Exposición oral (⭐⭐⭐)</span><span class="pts-rune">30 pts</span></div>
-    <div class="legend-row"><span style="color:var(--gold)">Máximo posible</span><span class="pts-rune" style="border-color:rgba(244,185,66,0.5);color:var(--gold)">210 pts</span></div>`;
-}
-
-/* ── NAV ── */
 function showView(name,btn){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('active');b.removeAttribute('aria-current');});
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('view-'+name).classList.add('active');
-  if(btn){btn.classList.add('active');btn.setAttribute('aria-current','page');}
+  btn?.classList.add('active');
   if(name==='ranking')renderRanking();
-  if(name==='resumen')renderResumen();
-  if(name==='tecnicas')renderTecnicas();
-  if(name==='insignias')renderInsignias();
-  if(name==='grupos')renderGroups();
+  if(name==='migrupo')renderMyGroup();
 }
 
 /* ── INIT ── */
-renderGroups();
+renderSelector();
+if(selectedGroup) renderMyGroup();
+
+/* ── AUTO-REFRESH cada 30s por si el docente actualiza datos ── */
+setInterval(()=>{
+  if(selectedGroup) renderMyGroup();
+  const activeRanking = document.getElementById('view-ranking').classList.contains('active');
+  if(activeRanking) renderRanking();
+  renderSelector();
+}, 30000);
 </script>
 </body>
 </html>
