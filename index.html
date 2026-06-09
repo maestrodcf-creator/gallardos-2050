@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --gold:#F4B942;--gold-light:#FFD97D;
+  --gold:#F4B942;--gold-light:#FFD97D;--gold-dark:#C8860A;
   --gem-blue:#38C6F4;--gem-purple:#B06FE8;--gem-green:#3DDBA0;
   --gem-red:#F4606C;--gem-amber:#F49C42;
   --stone:#1A1A2E;--stone-mid:#16213E;--stone-light:#0F3460;
@@ -21,149 +21,271 @@ html{scroll-behavior:smooth;}
 body{font-family:var(--font-body);background:var(--stone);color:#E8D5B0;min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(56,198,244,0.07) 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(176,111,232,0.07) 0%,transparent 50%);pointer-events:none;z-index:0;}
 
-/* HERO */
+/* ══════════════════════════════
+   MODAL CONTRASEÑA
+══════════════════════════════ */
+.modal-overlay{position:fixed;inset:0;background:rgba(10,10,20,0.85);backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-box{background:linear-gradient(135deg,rgba(22,33,62,0.98),rgba(15,52,96,0.95));border:1px solid rgba(244,185,66,0.3);border-radius:18px;padding:2rem;width:100%;max-width:360px;text-align:center;box-shadow:0 0 60px rgba(244,185,66,0.15),0 20px 60px rgba(0,0,0,0.6);animation:popIn 0.3s cubic-bezier(.34,1.56,.64,1);}
+@keyframes popIn{from{transform:scale(0.85);opacity:0;}to{transform:scale(1);opacity:1;}}
+.modal-icon{font-size:3rem;margin-bottom:1rem;display:block;animation:glow 3s ease-in-out infinite;}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 8px rgba(56,198,244,0.4));}50%{filter:drop-shadow(0 0 20px rgba(56,198,244,0.8)) drop-shadow(0 0 30px rgba(244,185,66,0.4));}}
+.modal-title{font-family:var(--font-display);font-size:1rem;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;}
+.modal-sub{font-family:var(--font-title);font-size:0.65rem;letter-spacing:2px;color:rgba(232,213,176,0.4);margin-bottom:1.5rem;}
+.modal-input{width:100%;font-family:var(--font-body);font-size:1rem;padding:10px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(244,185,66,0.25);border-radius:10px;color:#E8D5B0;text-align:center;letter-spacing:4px;transition:border-color 0.2s;margin-bottom:12px;}
+.modal-input:focus{outline:none;border-color:var(--gold);background:rgba(244,185,66,0.04);}
+.modal-input.error{border-color:var(--gem-red);animation:shake 0.4s;}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);}}
+.modal-error{font-size:0.75rem;color:var(--gem-red);margin-bottom:10px;font-family:var(--font-title);letter-spacing:0.5px;min-height:18px;}
+.modal-btn{width:100%;font-family:var(--font-title);font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;padding:10px;border-radius:20px;border:1px solid rgba(244,185,66,0.3);background:rgba(244,185,66,0.08);color:var(--gold);cursor:pointer;transition:all 0.2s;margin-bottom:8px;}
+.modal-btn:hover{background:rgba(244,185,66,0.18);box-shadow:0 0 15px rgba(244,185,66,0.2);}
+.modal-cancel{font-family:var(--font-title);font-size:0.6rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(232,213,176,0.3);background:none;border:none;cursor:pointer;padding:4px 10px;transition:color 0.2s;}
+.modal-cancel:hover{color:rgba(232,213,176,0.6);}
+
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
 .hero{position:relative;z-index:1;text-align:center;padding:2.5rem 1.5rem 1.5rem;}
-.hero-border{max-width:700px;margin:0 auto;border:1.5px solid rgba(244,185,66,0.25);border-radius:18px;padding:2rem 1.5rem 1.5rem;background:linear-gradient(135deg,rgba(22,33,62,0.92),rgba(15,52,96,0.7),rgba(22,33,62,0.92));box-shadow:0 0 40px rgba(56,198,244,0.1),0 0 70px rgba(244,185,66,0.06),inset 0 1px 0 rgba(244,185,66,0.15);position:relative;}
+.hero-border{max-width:700px;margin:0 auto;border:1.5px solid rgba(244,185,66,0.22);border-radius:18px;padding:2rem 1.5rem 1.5rem;background:linear-gradient(135deg,rgba(22,33,62,0.92),rgba(15,52,96,0.7),rgba(22,33,62,0.92));box-shadow:0 0 40px rgba(56,198,244,0.08),inset 0 1px 0 rgba(244,185,66,0.12);position:relative;}
 .hero-border::before{content:'✦';position:absolute;top:-11px;left:50%;transform:translateX(-50%);color:var(--gold);font-size:1.1rem;background:var(--stone);padding:0 8px;}
+
+/* Botón docente — esquina superior derecha del hero-border */
+.teacher-btn{position:absolute;top:10px;right:14px;font-size:0.7rem;font-family:var(--font-title);letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:20px;border:1px solid rgba(244,185,66,0.15);background:rgba(244,185,66,0.04);color:rgba(244,185,66,0.35);cursor:pointer;transition:all 0.25s;z-index:2;}
+.teacher-btn:hover{border-color:rgba(244,185,66,0.35);color:var(--gold);background:rgba(244,185,66,0.08);}
+
 .logo-wrap{width:80px;height:80px;margin:0 auto 1rem;animation:glow 3s ease-in-out infinite;}
 .logo-wrap img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 18px rgba(56,198,244,0.55)) drop-shadow(0 0 35px rgba(244,185,66,0.35));}
-@keyframes glow{0%,100%{filter:drop-shadow(0 0 12px rgba(56,198,244,0.4));}50%{filter:drop-shadow(0 0 28px rgba(56,198,244,0.8)) drop-shadow(0 0 45px rgba(244,185,66,0.45));}}
-.hero-eyebrow{font-family:var(--font-title);font-size:0.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--gem-blue);margin-bottom:7px;opacity:0.85;}
-.hero-title{font-family:var(--font-display);font-size:clamp(1.3rem,4vw,2rem);font-weight:900;background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gem-blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.15;margin-bottom:5px;filter:drop-shadow(0 2px 8px rgba(244,185,66,0.25));}
-.hero-sub{font-family:var(--font-title);font-size:0.72rem;color:rgba(232,213,176,0.55);letter-spacing:2px;margin-bottom:1.2rem;}
+.hero-eyebrow{font-family:var(--font-title);font-size:0.62rem;letter-spacing:4px;text-transform:uppercase;color:var(--gem-blue);margin-bottom:7px;opacity:0.8;}
+.hero-title{font-family:var(--font-display);font-size:clamp(1.3rem,4vw,2rem);font-weight:900;background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gem-blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.15;margin-bottom:5px;filter:drop-shadow(0 2px 8px rgba(244,185,66,0.2));}
+.hero-sub{font-family:var(--font-title);font-size:0.7rem;color:rgba(232,213,176,0.5);letter-spacing:2px;margin-bottom:1.2rem;}
+.selector-lbl{font-family:var(--font-title);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:rgba(244,185,66,0.55);margin-bottom:10px;}
+.groups-selector{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;}
+.sel-btn{font-family:var(--font-title);font-size:0.65rem;letter-spacing:0.8px;padding:5px 13px;border-radius:20px;border:1px solid rgba(244,185,66,0.18);background:rgba(244,185,66,0.03);color:rgba(232,213,176,0.55);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:5px;}
+.sel-btn:hover{border-color:rgba(244,185,66,0.38);color:var(--gold);}
+.sel-btn.active{border-color:var(--gold);color:var(--gold);background:rgba(244,185,66,0.1);box-shadow:0 0 10px rgba(244,185,66,0.12);}
 
-/* GROUP SELECTOR */
-.selector-title{font-family:var(--font-title);font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:rgba(244,185,66,0.6);margin-bottom:10px;}
-.groups-selector{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
-.sel-btn{font-family:var(--font-title);font-size:0.68rem;letter-spacing:1px;padding:6px 14px;border-radius:20px;border:1px solid rgba(244,185,66,0.2);background:rgba(244,185,66,0.04);color:rgba(232,213,176,0.6);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:5px;}
-.sel-btn:hover{border-color:rgba(244,185,66,0.4);color:var(--gold);background:rgba(244,185,66,0.08);}
-.sel-btn.active{border-color:var(--gold);color:var(--gold);background:rgba(244,185,66,0.12);box-shadow:0 0 12px rgba(244,185,66,0.15);}
-
-/* NAV */
+/* ══════════════════════════════
+   NAV
+══════════════════════════════ */
 .nav-wrap{max-width:860px;margin:0 auto;padding:.75rem 1.5rem 0;position:relative;z-index:1;}
-.nav{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid rgba(244,185,66,0.1);}
-.nav-btn{font-family:var(--font-title);font-size:0.65rem;letter-spacing:1.5px;text-transform:uppercase;padding:7px 14px;border-radius:7px 7px 0 0;border:1px solid transparent;border-bottom:none;background:transparent;color:rgba(232,213,176,0.35);cursor:pointer;transition:all 0.2s;position:relative;bottom:-1px;}
+.nav{display:flex;gap:5px;flex-wrap:wrap;border-bottom:1px solid rgba(244,185,66,0.1);}
+.nav-btn{font-family:var(--font-title);font-size:0.63rem;letter-spacing:1.5px;text-transform:uppercase;padding:7px 13px;border-radius:7px 7px 0 0;border:1px solid transparent;border-bottom:none;background:transparent;color:rgba(232,213,176,0.32);cursor:pointer;transition:all 0.2s;position:relative;bottom:-1px;}
 .nav-btn:hover{color:var(--gold);}
-.nav-btn.active{color:var(--gold);background:rgba(22,33,62,0.95);border-color:rgba(244,185,66,0.13);border-bottom-color:rgba(22,33,62,0.95);}
+.nav-btn.active{color:var(--gold);background:rgba(22,33,62,0.95);border-color:rgba(244,185,66,0.12);border-bottom-color:rgba(22,33,62,0.95);}
+/* Nav docente */
+.nav-btn.admin-nav{color:rgba(176,111,232,0.5);}
+.nav-btn.admin-nav:hover{color:var(--gem-purple);}
+.nav-btn.admin-nav.active{color:var(--gem-purple);border-color:rgba(176,111,232,0.2);border-bottom-color:rgba(22,33,62,0.95);}
+.admin-divider{width:1px;background:rgba(244,185,66,0.1);margin:6px 4px 0;}
 
-/* MAIN */
+/* ══════════════════════════════
+   MAIN / VIEWS
+══════════════════════════════ */
 .main{max-width:860px;margin:0 auto;padding:1.25rem 1.5rem 5rem;position:relative;z-index:1;}
 .view{display:none;}.view.active{display:block;animation:fadeUp 0.35s ease;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
 .section-lbl{font-family:var(--font-title);font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:rgba(244,185,66,0.4);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
 .section-lbl::after{content:'';flex:1;height:1px;background:rgba(244,185,66,0.07);}
 
-/* CARDS */
+/* ADMIN BADGE */
+.admin-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-title);font-size:0.62rem;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:20px;background:rgba(176,111,232,0.1);border:1px solid rgba(176,111,232,0.25);color:var(--gem-purple);margin-bottom:1rem;}
+.exit-admin-btn{font-family:var(--font-title);font-size:0.6rem;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:20px;border:1px solid rgba(244,185,66,0.2);background:transparent;color:rgba(244,185,66,0.45);cursor:pointer;margin-left:auto;transition:all 0.2s;}
+.exit-admin-btn:hover{color:var(--gold);border-color:rgba(244,185,66,0.4);}
+.admin-topbar{display:flex;align-items:center;gap:10px;margin-bottom:1rem;flex-wrap:wrap;}
+
+/* ══════════════════════════════
+   CARDS BASE
+══════════════════════════════ */
 .gem-card{background:linear-gradient(135deg,rgba(22,33,62,0.95),rgba(15,52,96,0.6));border:1px solid rgba(244,185,66,0.1);border-radius:14px;transition:all 0.2s;position:relative;overflow:hidden;}
 .gem-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--card-accent,linear-gradient(90deg,var(--gold),var(--gem-blue)));opacity:0.55;}
+.gem-card:hover{border-color:rgba(244,185,66,0.25);box-shadow:0 8px 28px rgba(0,0,0,0.35);}
+.gem-card.selected{border-color:rgba(56,198,244,0.4);box-shadow:0 0 0 2px rgba(56,198,244,0.1);}
 
-/* MY GROUP PANEL */
-.my-group-panel{padding:0;}
-.mg-header{padding:1.25rem 1.5rem;border-bottom:1px solid rgba(244,185,66,0.08);display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+/* ══════════════════════════════
+   LEVEL GEMS
+══════════════════════════════ */
+.level-gem{display:inline-flex;align-items:center;gap:4px;font-size:0.58rem;font-family:var(--font-title);letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:10px;}
+.lv-aprendiz{background:rgba(156,163,175,0.1);color:#9CA3AF;border:1px solid rgba(156,163,175,0.16);}
+.lv-explorador{background:rgba(56,198,244,0.1);color:var(--gem-blue);border:1px solid rgba(56,198,244,0.2);}
+.lv-guardian{background:rgba(61,219,160,0.1);color:var(--gem-green);border:1px solid rgba(61,219,160,0.2);}
+.lv-maestro{background:rgba(244,185,66,0.1);color:var(--gold);border:1px solid rgba(244,185,66,0.25);}
+
+/* ══════════════════════════════
+   VISTA ALUMNADO — MI GRUPO
+══════════════════════════════ */
+.no-group{text-align:center;padding:3rem 1rem;font-family:var(--font-title);font-size:0.78rem;color:rgba(232,213,176,0.28);letter-spacing:1.5px;line-height:2;}
+.mg-header{padding:1.25rem 1.5rem;border-bottom:1px solid rgba(244,185,66,0.07);display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
 .mg-emoji{font-size:2.5rem;}
-.mg-title{font-family:var(--font-title);font-size:1.1rem;font-weight:700;color:var(--gold-light);}
-.mg-meta{font-size:0.75rem;color:rgba(232,213,176,0.5);margin-top:3px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
-
-/* LEVEL GEMS */
-.level-gem{display:inline-flex;align-items:center;gap:4px;font-size:0.6rem;font-family:var(--font-title);letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:10px;}
-.lv-aprendiz{background:rgba(156,163,175,0.1);color:#9CA3AF;border:1px solid rgba(156,163,175,0.18);}
-.lv-explorador{background:rgba(56,198,244,0.1);color:var(--gem-blue);border:1px solid rgba(56,198,244,0.22);}
-.lv-guardian{background:rgba(61,219,160,0.1);color:var(--gem-green);border:1px solid rgba(61,219,160,0.22);}
-.lv-maestro{background:rgba(244,185,66,0.1);color:var(--gold);border:1px solid rgba(244,185,66,0.28);}
-
-/* PROGRESS */
-.progress-section{padding:1.25rem 1.5rem;border-bottom:1px solid rgba(244,185,66,0.06);}
-.progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-.progress-label{font-family:var(--font-title);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:rgba(232,213,176,0.45);}
-.progress-pct{font-family:var(--font-display);font-size:1.4rem;font-weight:700;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.mg-title{font-family:var(--font-title);font-size:1.05rem;font-weight:700;color:var(--gold-light);}
+.mg-meta{font-size:0.72rem;color:rgba(232,213,176,0.5);margin-top:3px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.progress-section{padding:1.1rem 1.5rem;border-bottom:1px solid rgba(244,185,66,0.05);}
+.progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;}
+.progress-label{font-family:var(--font-title);font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:rgba(232,213,176,0.38);}
+.progress-pct{font-family:var(--font-display);font-size:1.3rem;font-weight:700;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .bar-track{background:rgba(255,255,255,0.04);border-radius:99px;height:8px;overflow:hidden;}
 .bar-fill{height:8px;border-radius:99px;transition:width 0.8s cubic-bezier(.34,1.56,.64,1);}
-.pts-big{font-family:var(--font-display);font-size:2.2rem;font-weight:700;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;margin-top:10px;}
-.pts-sub{font-family:var(--font-title);font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:rgba(232,213,176,0.35);text-align:center;margin-bottom:6px;}
-
-/* ROLES */
-.roles-section{padding:1rem 1.5rem;border-bottom:1px solid rgba(244,185,66,0.06);display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;}
-.role-card{background:rgba(176,111,232,0.06);border:1px solid rgba(176,111,232,0.14);border-radius:9px;padding:8px 10px;text-align:center;}
-.role-icon{font-size:1.2rem;margin-bottom:3px;}
-.role-title{font-family:var(--font-title);font-size:0.58rem;letter-spacing:1px;text-transform:uppercase;color:var(--gem-purple);margin-bottom:3px;}
-.role-name{font-size:0.8rem;font-weight:700;color:var(--parchment);}
-.role-empty{color:rgba(232,213,176,0.25);font-style:italic;font-size:0.75rem;}
-
-/* TASKS LIST */
+.pts-big{font-family:var(--font-display);font-size:2rem;font-weight:700;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;margin-top:8px;}
+.pts-sub{font-family:var(--font-title);font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:rgba(232,213,176,0.3);text-align:center;}
+.roles-section{padding:.9rem 1.5rem;border-bottom:1px solid rgba(244,185,66,0.05);display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;}
+.role-card{background:rgba(176,111,232,0.06);border:1px solid rgba(176,111,232,0.12);border-radius:9px;padding:8px 10px;text-align:center;}
+.role-icon-s{font-size:1.1rem;margin-bottom:2px;}
+.role-title-s{font-family:var(--font-title);font-size:0.55rem;letter-spacing:1px;text-transform:uppercase;color:var(--gem-purple);margin-bottom:2px;}
+.role-name-s{font-size:0.78rem;font-weight:700;color:var(--parchment);}
+.role-empty-s{color:rgba(232,213,176,0.2);font-style:italic;font-size:0.72rem;}
 .tasks-section{padding:1rem 1.5rem;}
-.task-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(244,185,66,0.05);}
+.task-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid rgba(244,185,66,0.04);}
 .task-item:last-child{border:none;}
-.task-icon{font-size:1.2rem;flex-shrink:0;width:28px;text-align:center;margin-top:1px;}
+.task-icon-s{font-size:1.1rem;flex-shrink:0;width:26px;text-align:center;margin-top:1px;}
 .task-info{flex:1;}
-.task-name{font-size:0.85rem;font-weight:700;color:var(--parchment);}
-.task-page{font-size:0.62rem;font-family:var(--font-title);letter-spacing:0.8px;padding:1px 6px;border-radius:6px;background:rgba(244,185,66,0.07);border:1px solid rgba(244,185,66,0.12);color:var(--gold);margin-right:5px;}
-.task-status-row{display:flex;align-items:center;gap:8px;margin-top:4px;flex-wrap:wrap;}
-.status-chip{font-size:0.62rem;font-family:var(--font-title);letter-spacing:0.5px;padding:2px 8px;border-radius:10px;}
-.sc-done{background:rgba(61,219,160,0.1);color:var(--gem-green);border:1px solid rgba(61,219,160,0.18);}
-.sc-partial{background:rgba(244,156,66,0.1);color:var(--gem-amber);border:1px solid rgba(244,156,66,0.18);}
-.sc-pending{background:rgba(255,255,255,0.03);color:rgba(232,213,176,0.3);border:1px solid rgba(255,255,255,0.06);}
-.task-stars{color:var(--gold);font-size:0.9rem;letter-spacing:1px;}
-.task-comment{margin-top:6px;padding:8px 10px;background:rgba(56,198,244,0.05);border-left:2px solid rgba(56,198,244,0.3);border-radius:0 8px 8px 0;font-size:0.78rem;color:rgba(232,213,176,0.7);line-height:1.6;font-style:italic;}
-.teacher-comment-label{font-family:var(--font-title);font-size:0.58rem;letter-spacing:1px;text-transform:uppercase;color:var(--gem-blue);margin-bottom:3px;opacity:0.8;}
+.task-name-s{font-size:0.83rem;font-weight:700;color:var(--parchment);}
+.task-page-s{font-size:0.58rem;font-family:var(--font-title);letter-spacing:0.7px;padding:1px 6px;border-radius:6px;background:rgba(244,185,66,0.06);border:1px solid rgba(244,185,66,0.1);color:var(--gold);margin-right:5px;}
+.task-status-row{display:flex;align-items:center;gap:7px;margin-top:3px;flex-wrap:wrap;}
+.status-chip{font-size:0.6rem;font-family:var(--font-title);letter-spacing:0.4px;padding:2px 7px;border-radius:9px;}
+.sc-done{background:rgba(61,219,160,0.1);color:var(--gem-green);border:1px solid rgba(61,219,160,0.16);}
+.sc-partial{background:rgba(244,156,66,0.1);color:var(--gem-amber);border:1px solid rgba(244,156,66,0.16);}
+.sc-pending{background:rgba(255,255,255,0.03);color:rgba(232,213,176,0.28);border:1px solid rgba(255,255,255,0.05);}
+.task-stars-s{color:var(--gold);font-size:0.85rem;}
+.task-comment-s{margin-top:6px;padding:8px 10px;background:rgba(56,198,244,0.05);border-left:2px solid rgba(56,198,244,0.25);border-radius:0 8px 8px 0;font-size:0.76rem;color:rgba(232,213,176,0.68);line-height:1.6;font-style:italic;}
+.comment-lbl{font-family:var(--font-title);font-size:0.55rem;letter-spacing:1px;text-transform:uppercase;color:var(--gem-blue);margin-bottom:3px;opacity:0.75;}
+.note-box{background:rgba(244,185,66,0.04);border:1px solid rgba(244,185,66,0.1);border-radius:10px;padding:11px 13px;font-size:0.8rem;color:rgba(232,213,176,0.7);line-height:1.7;white-space:pre-wrap;}
+.general-note-section{padding:1rem 1.5rem;border-top:1px solid rgba(244,185,66,0.05);}
 
-/* GENERAL NOTE */
-.general-note-section{padding:1rem 1.5rem;border-top:1px solid rgba(244,185,66,0.06);}
-.note-box{background:rgba(244,185,66,0.04);border:1px solid rgba(244,185,66,0.12);border-radius:10px;padding:12px 14px;font-size:0.82rem;color:rgba(232,213,176,0.75);line-height:1.7;white-space:pre-wrap;}
-
-/* RANKING */
+/* ══════════════════════════════
+   RANKING
+══════════════════════════════ */
 .panel-card{border:1px solid rgba(244,185,66,0.12);border-radius:16px;padding:1.5rem;background:linear-gradient(135deg,rgba(22,33,62,0.95),rgba(15,52,96,0.6));box-shadow:0 8px 32px rgba(0,0,0,0.3);}
 .panel-title{font-family:var(--font-title);font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;display:flex;align-items:center;gap:8px;}
-.ranking-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(244,185,66,0.06);}
+.ranking-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(244,185,66,0.05);}
 .ranking-row:last-child{border:none;}
-.rank-pos{font-family:var(--font-display);font-size:1.3rem;width:34px;text-align:center;flex-shrink:0;}
+.ranking-row.is-me{background:rgba(244,185,66,0.05);border-radius:10px;padding-left:8px;}
+.rank-pos{font-family:var(--font-display);font-size:1.25rem;width:32px;text-align:center;flex-shrink:0;}
 .rank-info{flex:1;}
-.rank-name{font-family:var(--font-title);font-size:0.85rem;font-weight:600;color:var(--parchment);}
-.rank-meta{font-size:0.7rem;color:rgba(232,213,176,0.45);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
-.rank-bar-wrap{width:90px;background:rgba(255,255,255,0.04);border-radius:99px;height:6px;flex-shrink:0;}
-.rank-bar{height:6px;border-radius:99px;transition:width 0.7s cubic-bezier(.34,1.56,.64,1);}
+.rank-name{font-family:var(--font-title);font-size:0.83rem;font-weight:600;color:var(--parchment);}
+.rank-meta{font-size:0.68rem;color:rgba(232,213,176,0.42);margin-top:2px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.rank-bar-wrap{width:90px;background:rgba(255,255,255,0.04);border-radius:99px;height:5px;flex-shrink:0;}
+.rank-bar{height:5px;border-radius:99px;transition:width 0.7s cubic-bezier(.34,1.56,.64,1);}
 
-/* NO GROUP MSG */
-.no-group{text-align:center;padding:2rem;font-family:var(--font-title);font-size:0.8rem;color:rgba(232,213,176,0.35);letter-spacing:1px;}
+/* ══════════════════════════════
+   PANEL DOCENTE — GRUPOS GRID
+══════════════════════════════ */
+.groups-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:11px;}
+.group-card{padding:1rem;cursor:pointer;}
+.group-top{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+.group-emoji{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.45rem;background:rgba(244,185,66,0.05);border:1px solid rgba(244,185,66,0.1);flex-shrink:0;}
+.group-name{font-family:var(--font-title);font-size:0.8rem;font-weight:600;color:var(--parchment);line-height:1.3;}
+.pts-row{display:flex;justify-content:space-between;font-size:0.7rem;color:rgba(232,213,176,0.48);margin-bottom:5px;}
+.pts-val{font-weight:800;color:var(--gold-light);font-size:0.85rem;}
+.pips{display:flex;gap:3px;margin-top:7px;}
+.pip{flex:1;height:4px;border-radius:99px;background:rgba(255,255,255,0.06);}
+.pip.done{background:var(--gem-green);}.pip.partial{background:var(--gem-amber);}
+
+/* DETAIL PANEL (admin) */
+.detail-wrap{margin-top:13px;}
+.detail-card{border:1px solid rgba(56,198,244,0.18);border-radius:16px;overflow:hidden;background:linear-gradient(135deg,rgba(15,52,96,0.7),rgba(22,33,62,0.95));box-shadow:0 16px 48px rgba(0,0,0,0.4);animation:slideDown 0.3s ease;}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:none;}}
+.detail-head{padding:1rem 1.4rem;background:linear-gradient(135deg,rgba(10,127,168,0.22),rgba(176,111,232,0.1));border-bottom:1px solid rgba(56,198,244,0.12);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.detail-emoji{font-size:2rem;}
+.detail-title{font-family:var(--font-title);font-size:1rem;font-weight:700;color:var(--gold-light);}
+.detail-meta{font-size:0.7rem;color:rgba(232,213,176,0.5);margin-top:2px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.tabs{display:flex;border-bottom:1px solid rgba(244,185,66,0.07);padding:0 1.25rem;}
+.tab{font-family:var(--font-title);font-size:0.63rem;letter-spacing:1.5px;text-transform:uppercase;padding:8px 11px;cursor:pointer;color:rgba(232,213,176,0.32);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.2s;background:none;border-top:none;border-left:none;border-right:none;}
+.tab:hover{color:var(--gold);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-content{display:none;padding:1rem 1.4rem;}.tab-content.active{display:block;}
+.task-row{display:flex;align-items:flex-start;gap:9px;padding:9px 0;border-bottom:1px solid rgba(244,185,66,0.04);}
+.task-row:last-child{border:none;}
+.task-tag{font-size:0.56rem;font-family:var(--font-title);letter-spacing:0.7px;padding:2px 6px;border-radius:6px;background:rgba(244,185,66,0.06);border:1px solid rgba(244,185,66,0.11);color:var(--gold);white-space:nowrap;flex-shrink:0;margin-top:2px;}
+.task-body{flex:1;}
+.task-name{font-size:0.83rem;font-weight:700;color:var(--parchment);}
+.task-controls{display:flex;align-items:center;gap:7px;margin-top:5px;flex-wrap:wrap;}
+.status-sel{font-family:var(--font-title);font-size:0.65rem;padding:4px 7px;border-radius:7px;border:1px solid rgba(244,185,66,0.16);background:rgba(22,33,62,0.9);color:#E8D5B0;cursor:pointer;appearance:none;-webkit-appearance:none;}
+.status-sel:focus{outline:none;border-color:var(--gold);}
+.stars-row{display:flex;gap:1px;}
+.star-btn{font-size:1.05rem;background:none;border:none;cursor:pointer;color:rgba(244,185,66,0.16);transition:all 0.15s;padding:0 1px;line-height:1;}
+.star-btn.lit{color:var(--gold);text-shadow:0 0 7px rgba(244,185,66,0.45);}
+.star-btn:hover{transform:scale(1.3);}
+.cmt-area{width:100%;margin-top:6px;font-family:var(--font-body);font-size:0.76rem;padding:7px 9px;background:rgba(255,255,255,0.03);border:1px solid rgba(244,185,66,0.09);border-radius:7px;color:#E8D5B0;resize:none;transition:border-color 0.2s;line-height:1.6;}
+.cmt-area:focus{outline:none;border-color:rgba(244,185,66,0.28);}
+.gem-btn{font-family:var(--font-title);font-size:0.63rem;letter-spacing:1.5px;text-transform:uppercase;padding:5px 13px;border-radius:20px;border:1px solid rgba(244,185,66,0.22);background:rgba(244,185,66,0.05);color:var(--gold);cursor:pointer;margin-top:6px;transition:all 0.2s;}
+.gem-btn:hover{background:rgba(244,185,66,0.13);box-shadow:0 0 10px rgba(244,185,66,0.15);}
+.ok-msg{display:none;font-size:0.65rem;color:var(--gem-green);margin-top:3px;font-family:var(--font-title);letter-spacing:0.8px;}
+.roles-grid-a{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:9px;margin-bottom:1rem;}
+.role-lbl{font-family:var(--font-title);font-size:0.6rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--gem-purple);margin-bottom:4px;}
+.role-input{width:100%;font-family:var(--font-body);font-size:0.78rem;padding:6px 9px;background:rgba(255,255,255,0.03);border:1px solid rgba(176,111,232,0.16);border-radius:7px;color:#E8D5B0;transition:border-color 0.2s;}
+.role-input:focus{outline:none;border-color:rgba(176,111,232,0.42);}
+.note-ta{width:100%;font-family:var(--font-body);font-size:0.8rem;padding:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(244,185,66,0.09);border-radius:9px;color:#E8D5B0;resize:none;line-height:1.7;transition:border-color 0.2s;}
+.note-ta:focus{outline:none;border-color:rgba(244,185,66,0.26);}
+
+/* METRICS */
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-bottom:1.4rem;}
+.metric-card{background:linear-gradient(135deg,rgba(22,33,62,0.95),rgba(15,52,96,0.5));border:1px solid rgba(244,185,66,0.09);border-radius:12px;padding:.85rem;text-align:center;}
+.metric-val{font-family:var(--font-display);font-size:1.6rem;font-weight:700;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.metric-lbl{font-family:var(--font-title);font-size:0.55rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(232,213,176,0.35);margin-top:2px;}
+.insight{display:flex;gap:10px;padding:9px 12px;border-radius:8px;margin-bottom:6px;font-size:0.78rem;font-weight:600;border:1px solid rgba(255,255,255,0.03);}
+.ic-green{background:rgba(61,219,160,0.05);border-color:rgba(61,219,160,0.09);color:rgba(61,219,160,0.82);}
+.ic-amber{background:rgba(244,156,66,0.05);border-color:rgba(244,156,66,0.09);color:rgba(244,156,66,0.82);}
+.ic-blue{background:rgba(56,198,244,0.05);border-color:rgba(56,198,244,0.09);color:rgba(56,198,244,0.82);}
 
 @media(max-width:600px){.main,.nav-wrap{padding-left:1rem;padding-right:1rem;}.rank-bar-wrap{display:none;}.hero{padding:1.5rem 1rem 1rem;}}
-::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:rgba(22,33,62,0.5);}::-webkit-scrollbar-thumb{background:rgba(244,185,66,0.18);border-radius:3px;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:rgba(22,33,62,0.5);}::-webkit-scrollbar-thumb{background:rgba(244,185,66,0.16);border-radius:3px;}
 </style>
 </head>
 <body>
 
-<!-- HERO -->
+<!-- ══ MODAL CONTRASEÑA ══ -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <span class="modal-icon">🔮</span>
+    <div class="modal-title">Acceso Docente</div>
+    <div class="modal-sub">Introduce el grimorio secreto</div>
+    <input type="password" class="modal-input" id="modal-pwd" placeholder="••••••"
+      onkeydown="if(event.key==='Enter')checkPassword()">
+    <div class="modal-error" id="modal-error"></div>
+    <button class="modal-btn" onclick="checkPassword()">✦ Abrir el portal</button>
+    <button class="modal-cancel" onclick="closeModal()">Cancelar</button>
+  </div>
+</div>
+
+<!-- ══ HERO ══ -->
 <header class="hero">
   <div class="hero-border">
+    <button class="teacher-btn" onclick="openModal()" title="Acceso docente">🔑 Docente</button>
     <div class="logo-wrap">
-      <img src="El_Secreto_de_las_Gemas-2.png" alt="Logo El Secreto de las Gemas" onerror="this.parentNode.innerHTML='<span style=&quot;font-size:3rem;display:block;text-align:center&quot;>🔮</span>'">
+      <img src="El_Secreto_de_las_Gemas-2.png" alt="Logo"
+        onerror="this.parentNode.innerHTML='<span style=\'font-size:3rem;display:block;text-align:center\'>🔮</span>'">
     </div>
     <p class="hero-eyebrow">Los Gallardos 2050 · 4.º de Primaria</p>
     <h1 class="hero-title">El Secreto de las Gemas</h1>
     <p class="hero-sub">Aprendizaje Cooperativo · Misión Activa</p>
-    <div class="selector-title">Selecciona tu equipo para ver tu progreso</div>
+    <div class="selector-lbl">Selecciona tu equipo</div>
     <div class="groups-selector" id="groups-selector"></div>
   </div>
 </header>
 
-<!-- NAV -->
-<nav class="nav-wrap">
-  <div class="nav">
+<!-- ══ NAV ══ -->
+<nav class="nav-wrap" id="nav-wrap">
+  <div class="nav" id="main-nav">
     <button class="nav-btn active" onclick="showView('migrupo',this)">💎 Mi Grupo</button>
     <button class="nav-btn" onclick="showView('ranking',this)">🏆 Ranking</button>
+    <!-- Las tabs de docente se inyectan aquí si está autenticado -->
+    <div id="admin-nav-items" style="display:none;display:flex;gap:5px;align-items:center">
+      <div class="admin-divider"></div>
+      <button class="nav-btn admin-nav" onclick="showView('admin-grupos',this)">⚔️ Evaluar Grupos</button>
+      <button class="nav-btn admin-nav" onclick="showView('admin-resumen',this)">🔮 Resumen</button>
+    </div>
   </div>
 </nav>
 
-<!-- MAIN -->
+<!-- ══ MAIN ══ -->
 <main class="main">
 
-  <!-- MI GRUPO -->
+  <!-- VISTA ALUMNADO: MI GRUPO -->
   <div id="view-migrupo" class="view active">
     <div id="my-group-content">
-      <div class="no-group">✦ · · · Selecciona tu equipo arriba · · · ✦</div>
+      <div class="no-group">✦ · · ·<br>Selecciona tu equipo arriba<br>para ver tu progreso<br>· · · ✦</div>
     </div>
   </div>
 
-  <!-- RANKING -->
+  <!-- VISTA ALUMNADO: RANKING -->
   <div id="view-ranking" class="view">
     <div class="panel-card">
       <div class="panel-title">✦ Clasificación de Gemas</div>
@@ -171,150 +293,330 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
   </div>
 
+  <!-- VISTA DOCENTE: GRUPOS -->
+  <div id="view-admin-grupos" class="view">
+    <div class="admin-topbar">
+      <div class="admin-badge">🔮 Modo docente activo</div>
+      <button class="exit-admin-btn" onclick="exitAdmin()">Salir del modo docente</button>
+    </div>
+    <div class="section-lbl">Equipos de aventureros</div>
+    <div class="groups-grid" id="admin-groups-grid"></div>
+    <div id="admin-detail-panel" class="detail-wrap"></div>
+  </div>
+
+  <!-- VISTA DOCENTE: RESUMEN -->
+  <div id="view-admin-resumen" class="view">
+    <div class="admin-topbar">
+      <div class="admin-badge">🔮 Modo docente activo</div>
+      <button class="exit-admin-btn" onclick="exitAdmin()">Salir del modo docente</button>
+    </div>
+    <div class="panel-card">
+      <div class="panel-title">🔮 Resumen de la Aventura</div>
+      <div class="metrics-grid" id="admin-metrics"></div>
+      <div class="section-lbl">Observaciones</div>
+      <div id="admin-insights"></div>
+    </div>
+  </div>
+
 </main>
 
-<script src="shared.js"></script>
 <script>
-let selectedGroup = localStorage.getItem('student_selected_group') || null;
+/* ══════════════════════════════════════
+   DATOS COMPARTIDOS
+══════════════════════════════════════ */
+const TASKS=[
+  {id:'t0',name:'Portada y nombre del equipo',page:'Portada'},
+  {id:'t1',name:'Plano de calles y ángulos',page:'Pág. 1'},
+  {id:'t2',name:'Mapa de profesiones y sectores',page:'Pág. 2'},
+  {id:'t3',name:'Red de energía sostenible',page:'Pág. 3'},
+  {id:'t4',name:'Agenda de la ciudad',page:'Pág. 4'},
+  {id:'t5',name:'Cartel publicitario',page:'Pág. 5'},
+  {id:'t6',name:'Exposición oral',page:'Final'},
+];
+const GROUPS_INIT=[
+  {id:'g0',name:'Los Pingüin@s',emoji:'🐧'},
+  {id:'g1',name:'Los Reyes/Reinas del Flow',emoji:'👑'},
+  {id:'g2',name:'Las Llamas del Flow',emoji:'🔥'},
+  {id:'g3',name:'Los Listill@s',emoji:'🧠'},
+  {id:'g4',name:'L@s Andaluces/as',emoji:'🌻'},
+  {id:'g5',name:'L@s Sherifs',emoji:'⭐'},
+  {id:'g6',name:'L@s Casas',emoji:'🏠'},
+];
+const ACCENTS=['linear-gradient(90deg,#38C6F4,#B06FE8)','linear-gradient(90deg,#F4B942,#F4606C)','linear-gradient(90deg,#3DDBA0,#38C6F4)','linear-gradient(90deg,#B06FE8,#F4606C)','linear-gradient(90deg,#F49C42,#F4B942)','linear-gradient(90deg,#F4606C,#B06FE8)','linear-gradient(90deg,#3DDBA0,#B06FE8)'];
+const SOLID=['#38C6F4','#F4B942','#3DDBA0','#B06FE8','#F49C42','#F4606C','#3DDBA0'];
+const LEVELS=[
+  {min:280,label:'Maestro/a de las Gemas',cls:'lv-maestro',icon:'✦',color:'#F4B942'},
+  {min:160,label:'Guardián/a',cls:'lv-guardian',icon:'❖',color:'#3DDBA0'},
+  {min:70,label:'Explorador/a',cls:'lv-explorador',icon:'◆',color:'#38C6F4'},
+  {min:0,label:'Aprendiz de Gema',cls:'lv-aprendiz',icon:'⬥',color:'#9CA3AF'},
+];
+const ADMIN_PASSWORD='gemas2050';
 
-/* ── SELECTOR DE GRUPO ── */
+function getLevel(pts){return LEVELS.find(l=>pts>=l.min);}
+function getPoints(g){return g.tasks.reduce((s,t)=>{if(t.status==='done')return s+Math.max(1,t.stars||1)*10;if(t.status==='partial')return s+5;return s;},0);}
+function countDone(g){return g.tasks.filter(t=>t.status==='done').length;}
+function loadData(){try{return JSON.parse(localStorage.getItem('gemas_v2'))||initData();}catch(e){return initData();}}
+function initData(){const data=GROUPS_INIT.map((g,i)=>({...g,accent:ACCENTS[i],solid:SOLID[i],generalNote:'',roles:{coord:'',secre:'',moder:'',porta:''},tasks:TASKS.map(t=>({id:t.id,status:'pending',stars:0,comment:''}))}));saveData(data);return data;}
+function saveData(d){localStorage.setItem('gemas_v2',JSON.stringify(d));}
+function flashOk(id){const el=document.getElementById(id);if(!el)return;el.style.display='block';setTimeout(()=>el.style.display='none',2400);}
+
+/* ══════════════════════════════════════
+   AUTENTICACIÓN
+══════════════════════════════════════ */
+let isAdmin = sessionStorage.getItem('gemas_admin')==='1';
+
+function openModal(){
+  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('modal-pwd').value='';
+  document.getElementById('modal-error').textContent='';
+  setTimeout(()=>document.getElementById('modal-pwd').focus(),200);
+}
+function closeModal(){document.getElementById('modal-overlay').classList.remove('open');}
+
+function checkPassword(){
+  const pwd=document.getElementById('modal-pwd').value;
+  const inp=document.getElementById('modal-pwd');
+  const err=document.getElementById('modal-error');
+  if(pwd===ADMIN_PASSWORD){
+    isAdmin=true;
+    sessionStorage.setItem('gemas_admin','1');
+    closeModal();
+    activateAdminMode();
+  } else {
+    err.textContent='✗ Contraseña incorrecta. Inténtalo de nuevo.';
+    inp.classList.add('error');
+    setTimeout(()=>inp.classList.remove('error'),500);
+    inp.value='';
+    inp.focus();
+  }
+}
+
+function activateAdminMode(){
+  document.getElementById('admin-nav-items').style.display='flex';
+  showView('admin-grupos', document.querySelector('.nav-btn.admin-nav'));
+}
+
+function exitAdmin(){
+  isAdmin=false;
+  sessionStorage.removeItem('gemas_admin');
+  document.getElementById('admin-nav-items').style.display='none';
+  showView('migrupo', document.querySelector('.nav-btn:first-child'));
+}
+
+/* ══════════════════════════════════════
+   VISTA ALUMNADO
+══════════════════════════════════════ */
+let selectedGroup=localStorage.getItem('student_group')||null;
+
 function renderSelector(){
-  const groups = loadData();
-  document.getElementById('groups-selector').innerHTML = groups.map(g => `
+  const groups=loadData();
+  document.getElementById('groups-selector').innerHTML=groups.map(g=>`
     <button class="sel-btn ${selectedGroup===g.id?'active':''}" onclick="selectGroup('${g.id}')">
       ${g.emoji} ${g.name}
     </button>`).join('');
 }
 
 function selectGroup(gid){
-  selectedGroup = gid;
-  localStorage.setItem('student_selected_group', gid);
+  selectedGroup=gid;
+  localStorage.setItem('student_group',gid);
   renderSelector();
   renderMyGroup();
 }
 
-/* ── MI GRUPO ── */
 function renderMyGroup(){
-  if(!selectedGroup){ document.getElementById('my-group-content').innerHTML='<div class="no-group">✦ · · · Selecciona tu equipo arriba · · · ✦</div>'; return; }
-  const groups = loadData();
-  const g = groups.find(x=>x.id===selectedGroup);
-  if(!g){ return; }
-  const pts = getPoints(g), lv = getLevel(pts), done = countDone(g);
-  const pct = Math.round((done/TASKS.length)*100);
-
-  // roles
-  const roleDefs = [
-    {key:'coord',lbl:'Coordinador/a',icon:'⚔️'},
-    {key:'secre',lbl:'Secretari@',icon:'📜'},
-    {key:'moder',lbl:'Moderador/a',icon:'⚖️'},
-    {key:'porta',lbl:'Portavoz',icon:'📣'},
-  ];
-  const hasRoles = roleDefs.some(r=>g.roles?.[r.key]);
-  const hasNote = g.generalNote && g.generalNote.trim().length > 0;
-
-  document.getElementById('my-group-content').innerHTML = `
-  <div class="gem-card my-group-panel" style="--card-accent:${g.accent}">
-
-    <!-- CABECERA -->
-    <div class="mg-header" style="background:linear-gradient(135deg,${g.solid}18,${g.solid}06)">
-      <span class="mg-emoji" style="filter:drop-shadow(0 0 12px ${g.solid}88)">${g.emoji}</span>
-      <div>
-        <div class="mg-title">${g.name}</div>
-        <div class="mg-meta">
-          <span class="level-gem ${lv.cls}">${lv.icon} ${lv.label}</span>
-          <span>${pts} puntos · ${done}/${TASKS.length} misiones</span>
-        </div>
-      </div>
+  if(!selectedGroup){document.getElementById('my-group-content').innerHTML='<div class="no-group">✦ · · ·<br>Selecciona tu equipo arriba<br>para ver tu progreso<br>· · · ✦</div>';return;}
+  const groups=loadData(),g=groups.find(x=>x.id===selectedGroup);
+  if(!g)return;
+  const pts=getPoints(g),lv=getLevel(pts),done=countDone(g),pct=Math.round((done/TASKS.length)*100);
+  const roleDefs=[{key:'coord',lbl:'Coordinador/a',icon:'⚔️'},{key:'secre',lbl:'Secretari@',icon:'📜'},{key:'moder',lbl:'Moderador/a',icon:'⚖️'},{key:'porta',lbl:'Portavoz',icon:'📣'}];
+  const hasRoles=roleDefs.some(r=>g.roles?.[r.key]);
+  const hasNote=g.generalNote&&g.generalNote.trim().length>0;
+  document.getElementById('my-group-content').innerHTML=`
+  <div class="gem-card" style="--card-accent:${g.accent}">
+    <div class="mg-header" style="background:linear-gradient(135deg,${g.solid}15,${g.solid}05)">
+      <span class="mg-emoji" style="filter:drop-shadow(0 0 10px ${g.solid}77)">${g.emoji}</span>
+      <div><div class="mg-title">${g.name}</div>
+      <div class="mg-meta"><span class="level-gem ${lv.cls}">${lv.icon} ${lv.label}</span><span>${pts} pts · ${done}/${TASKS.length} misiones</span></div></div>
     </div>
-
-    <!-- PROGRESO -->
     <div class="progress-section">
-      <div class="progress-header">
-        <span class="progress-label">Progreso de la misión</span>
-        <span class="progress-pct">${pct}%</span>
-      </div>
+      <div class="progress-header"><span class="progress-label">Progreso de la misión</span><span class="progress-pct">${pct}%</span></div>
       <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${g.accent}"></div></div>
-      <div class="pts-big">${pts}</div>
-      <div class="pts-sub">gemas conquistadas</div>
+      <div class="pts-big">${pts}</div><div class="pts-sub">gemas conquistadas</div>
     </div>
-
-    <!-- ROLES -->
-    ${hasRoles ? `
-    <div class="section-lbl" style="padding:0.8rem 1.5rem 0;margin-bottom:0">Roles del equipo</div>
+    ${hasRoles?`
+    <div class="section-lbl" style="padding:.7rem 1.5rem 0;margin-bottom:0">Roles del equipo</div>
     <div class="roles-section">
-      ${roleDefs.map(r=>`
-      <div class="role-card">
-        <div class="role-icon">${r.icon}</div>
-        <div class="role-title">${r.lbl}</div>
-        ${g.roles?.[r.key]
-          ? `<div class="role-name">${g.roles[r.key]}</div>`
-          : `<div class="role-empty">—</div>`}
+      ${roleDefs.map(r=>`<div class="role-card">
+        <div class="role-icon-s">${r.icon}</div>
+        <div class="role-title-s">${r.lbl}</div>
+        ${g.roles?.[r.key]?`<div class="role-name-s">${g.roles[r.key]}</div>`:`<div class="role-empty-s">—</div>`}
       </div>`).join('')}
-    </div>` : ''}
-
-    <!-- MISIONES -->
-    <div class="section-lbl" style="padding:0.8rem 1.5rem 0;margin-bottom:0">Estado de las misiones</div>
+    </div>`:''}
+    <div class="section-lbl" style="padding:.7rem 1.5rem 0;margin-bottom:0">Estado de las misiones</div>
     <div class="tasks-section">
       ${g.tasks.map(t=>{
-        const task = TASKS.find(x=>x.id===t.id);
-        const isDone = t.status==='done', isPartial = t.status==='partial';
-        const scCls = isDone?'sc-done':isPartial?'sc-partial':'sc-pending';
-        const scLbl = isDone?'✅ Completa':isPartial?'⏳ En progreso':'◻ Pendiente';
-        const icon = isDone?'✅':isPartial?'⏳':'🔒';
-        const starsStr = t.stars ? '★'.repeat(t.stars)+'☆'.repeat(3-t.stars) : '';
+        const task=TASKS.find(x=>x.id===t.id);
+        const isDone=t.status==='done',isPartial=t.status==='partial';
+        const scCls=isDone?'sc-done':isPartial?'sc-partial':'sc-pending';
+        const scLbl=isDone?'✅ Completa':isPartial?'⏳ En progreso':'◻ Pendiente';
+        const icon=isDone?'✅':isPartial?'⏳':'🔒';
+        const stars=t.stars?'★'.repeat(t.stars)+'☆'.repeat(3-t.stars):'';
         return `<div class="task-item">
-          <div class="task-icon">${icon}</div>
+          <div class="task-icon-s">${icon}</div>
           <div class="task-info">
-            <div class="task-name">
-              <span class="task-page">${task.page}</span>${task.name}
-            </div>
+            <div class="task-name-s"><span class="task-page-s">${task.page}</span>${task.name}</div>
             <div class="task-status-row">
               <span class="status-chip ${scCls}">${scLbl}</span>
-              ${starsStr ? `<span class="task-stars">${starsStr}</span>` : ''}
-              ${isDone && t.stars ? `<span style="font-size:0.7rem;color:rgba(244,185,66,0.6);font-family:var(--font-title)">${t.stars*10} pts</span>` : ''}
+              ${stars?`<span class="task-stars-s">${stars}</span>`:''}
+              ${isDone&&t.stars?`<span style="font-size:0.68rem;color:rgba(244,185,66,0.55);font-family:var(--font-title)">${t.stars*10} pts</span>`:''}
             </div>
-            ${t.comment ? `
-            <div class="task-comment">
-              <div class="teacher-comment-label">💬 Comentario del maestro/a</div>
-              ${t.comment}
-            </div>` : ''}
+            ${t.comment?`<div class="task-comment-s"><div class="comment-lbl">💬 Comentario del maestro/a</div>${t.comment}</div>`:''}
           </div>
         </div>`;
       }).join('')}
     </div>
-
-    <!-- NOTA GENERAL -->
-    ${hasNote ? `
-    <div class="general-note-section">
-      <div class="section-lbl" style="margin-bottom:8px">📜 Valoración general del maestro/a</div>
+    ${hasNote?`<div class="general-note-section">
+      <div class="section-lbl" style="margin-bottom:7px">📜 Valoración del maestro/a</div>
       <div class="note-box">${g.generalNote}</div>
-    </div>` : ''}
-
+    </div>`:''}
   </div>`;
 }
 
-/* ── RANKING ── */
 function renderRanking(){
   const groups=loadData(),sorted=[...groups].sort((a,b)=>getPoints(b)-getPoints(a)),maxPts=Math.max(1,getPoints(sorted[0]));
   const medals=['🥇','🥈','🥉'];
   document.getElementById('ranking-list').innerHTML=sorted.map((g,i)=>{
-    const pts=getPoints(g),lv=getLevel(pts),pct=Math.round((pts/maxPts)*100);
-    const isMe = g.id===selectedGroup;
-    return `<div class="ranking-row" style="${isMe?'background:rgba(244,185,66,0.06);border-radius:10px;padding-left:8px;':''}">
+    const pts=getPoints(g),lv=getLevel(pts),pct=Math.round((pts/maxPts)*100),isMe=g.id===selectedGroup;
+    return `<div class="ranking-row ${isMe?'is-me':''}">
       <div class="rank-pos" style="color:${i<3?['#FFD700','#C0C0C0','#CD7F32'][i]:g.solid}">${medals[i]||i+1}</div>
-      <div style="font-size:1.4rem;filter:drop-shadow(0 0 6px ${g.solid}66)">${g.emoji}</div>
+      <div style="font-size:1.3rem">${g.emoji}</div>
       <div class="rank-info">
-        <div class="rank-name">${g.name}${isMe?' <span style="font-size:0.62rem;color:var(--gold);font-family:var(--font-title);letter-spacing:1px">← Mi equipo</span>':''}</div>
-        <div class="rank-meta">
-          <span class="level-gem ${lv.cls}">${lv.icon} ${lv.label}</span>
-          <span>${pts} pts</span><span>${countDone(g)}/${TASKS.length} misiones</span>
-        </div>
+        <div class="rank-name">${g.name}${isMe?' <span style="font-size:0.58rem;color:var(--gold);font-family:var(--font-title);letter-spacing:1px">← Mi equipo</span>':''}</div>
+        <div class="rank-meta"><span class="level-gem ${lv.cls}">${lv.icon} ${lv.label}</span><span>${pts} pts</span><span>${countDone(g)}/${TASKS.length} misiones</span></div>
       </div>
       <div class="rank-bar-wrap"><div class="rank-bar" style="width:${pct}%;background:${g.accent}"></div></div>
     </div>`;
   }).join('');
 }
 
+/* ══════════════════════════════════════
+   PANEL DOCENTE
+══════════════════════════════════════ */
+function renderAdminGroups(){
+  const groups=loadData();
+  document.getElementById('admin-groups-grid').innerHTML=groups.map(g=>{
+    const pts=getPoints(g),lv=getLevel(pts),done=countDone(g),pct=Math.round((done/TASKS.length)*100);
+    return `<article class="gem-card group-card" id="acard-${g.id}" style="--card-accent:${g.accent}"
+      onclick="openAdminGroup('${g.id}')" tabindex="0" onkeydown="if(event.key==='Enter')openAdminGroup('${g.id}')">
+      <div class="group-top">
+        <div class="group-emoji">${g.emoji}</div>
+        <div><div class="group-name">${g.name}</div>
+        <div style="margin-top:3px"><span class="level-gem ${lv.cls}">${lv.icon} ${lv.label}</span></div></div>
+      </div>
+      <div class="pts-row"><span>${done}/${TASKS.length} misiones</span><span class="pts-val">${pts} pts</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${g.accent}"></div></div>
+      <div class="pips">${g.tasks.map(t=>`<div class="pip ${t.status==='done'?'done':t.status==='partial'?'partial':''}"></div>`).join('')}</div>
+    </article>`;
+  }).join('');
+}
+
+function openAdminGroup(gid){
+  const groups=loadData(),g=groups.find(x=>x.id===gid);
+  document.querySelectorAll('.group-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('acard-'+gid)?.classList.add('selected');
+  const pts=getPoints(g),lv=getLevel(pts);
+  document.getElementById('admin-detail-panel').innerHTML=`
+  <div class="detail-card">
+    <div class="detail-head" style="background:linear-gradient(135deg,${g.solid}18,${g.solid}06)">
+      <span class="detail-emoji">${g.emoji}</span>
+      <div><div class="detail-title">${g.name}</div>
+      <div class="detail-meta"><span class="level-gem ${lv.cls}">${lv.icon} ${lv.label}</span><span>${pts} pts</span><span>${countDone(g)}/${TASKS.length} misiones</span></div></div>
+    </div>
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab(event,'adt-${gid}','${gid}')">⚔️ Misiones</button>
+      <button class="tab" onclick="switchTab(event,'adr-${gid}','${gid}')">👥 Roles</button>
+      <button class="tab" onclick="switchTab(event,'adn-${gid}','${gid}')">📜 Nota general</button>
+    </div>
+    <div id="adt-${gid}" class="tab-content active">
+      ${g.tasks.map(t=>{
+        const task=TASKS.find(x=>x.id===t.id);
+        const scCls=t.status==='done'?'sc-done':t.status==='partial'?'sc-partial':'sc-pending';
+        const scLbl=t.status==='done'?'✅ Completa':t.status==='partial'?'⏳ En progreso':'◻ Pendiente';
+        return `<div class="task-row">
+          <span class="task-tag">${task.page}</span>
+          <div class="task-body">
+            <div class="task-name">${task.name}</div>
+            <div class="task-controls">
+              <select class="status-sel" onchange="updateStatus('${gid}','${t.id}',this.value)">
+                <option value="pending" ${t.status==='pending'?'selected':''}>Pendiente</option>
+                <option value="partial" ${t.status==='partial'?'selected':''}>En progreso</option>
+                <option value="done" ${t.status==='done'?'selected':''}>Completa</option>
+              </select>
+              <div class="stars-row">${[1,2,3].map(s=>`<button class="star-btn ${(t.stars||0)>=s?'lit':''}" onclick="setStars('${gid}','${t.id}',${s})">★</button>`).join('')}</div>
+              <span class="status-chip ${scCls}">${scLbl}</span>
+            </div>
+            <textarea class="cmt-area" rows="2" placeholder="Comentario visible para el grupo…" id="cmt-${gid}-${t.id}">${t.comment||''}</textarea>
+            <button class="gem-btn" onclick="saveCmt('${gid}','${t.id}')">Guardar</button>
+            <div class="ok-msg" id="ok-${gid}-${t.id}">✦ Guardado y visible para el grupo</div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div id="adr-${gid}" class="tab-content">
+      <p style="font-size:0.72rem;color:rgba(232,213,176,0.38);margin-bottom:10px;font-family:var(--font-title)">Asigna los roles cooperativos del equipo</p>
+      <div class="roles-grid-a">
+        ${[{key:'coord',lbl:'Coordinador/a',icon:'⚔️'},{key:'secre',lbl:'Secretari@',icon:'📜'},{key:'moder',lbl:'Moderador/a',icon:'⚖️'},{key:'porta',lbl:'Portavoz',icon:'📣'}].map(r=>`
+        <div><div class="role-lbl">${r.icon} ${r.lbl}</div>
+        <input type="text" class="role-input" id="role-${gid}-${r.key}" placeholder="Nombre…" value="${g.roles?.[r.key]||''}"/></div>`).join('')}
+      </div>
+      <button class="gem-btn" onclick="saveRoles('${gid}')">✦ Guardar roles</button>
+      <div class="ok-msg" id="rok-${gid}">✦ Roles guardados</div>
+    </div>
+    <div id="adn-${gid}" class="tab-content">
+      <p style="font-size:0.72rem;color:rgba(232,213,176,0.38);margin-bottom:8px;font-family:var(--font-title)">Valoración visible para el grupo en su vista</p>
+      <textarea class="note-ta" rows="5" id="gnote-${gid}" placeholder="Actitud, trabajo cooperativo, evolución…">${g.generalNote||''}</textarea>
+      <button class="gem-btn" onclick="saveNote('${gid}')">✦ Guardar nota</button>
+      <div class="ok-msg" id="gok-${gid}">✦ Nota guardada</div>
+    </div>
+  </div>`;
+  document.getElementById('admin-detail-panel').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function switchTab(e,tabId,gid){
+  const w=e.target.closest('.detail-card');
+  w.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  w.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  e.target.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+function updateStatus(gid,tid,val){const g=loadData();g.find(x=>x.id===gid).tasks.find(t=>t.id===tid).status=val;saveData(g);renderAdminGroups();openAdminGroup(gid);}
+function setStars(gid,tid,val){const g=loadData();const t=g.find(x=>x.id===gid).tasks.find(t=>t.id===tid);t.stars=(t.stars===val)?0:val;saveData(g);renderAdminGroups();openAdminGroup(gid);}
+function saveCmt(gid,tid){const g=loadData();const t=g.find(x=>x.id===gid).tasks.find(t=>t.id===tid);const el=document.getElementById('cmt-'+gid+'-'+tid);if(el){t.comment=el.value;saveData(g);}flashOk('ok-'+gid+'-'+tid);}
+function saveRoles(gid){const g=loadData();const gr=g.find(x=>x.id===gid);['coord','secre','moder','porta'].forEach(k=>{const el=document.getElementById('role-'+gid+'-'+k);if(el){gr.roles=gr.roles||{};gr.roles[k]=el.value;}});saveData(g);renderAdminGroups();flashOk('rok-'+gid);}
+function saveNote(gid){const g=loadData();const gr=g.find(x=>x.id===gid);const el=document.getElementById('gnote-'+gid);if(el){gr.generalNote=el.value;saveData(g);}flashOk('gok-'+gid);}
+
+function renderAdminResumen(){
+  const groups=loadData(),total=groups.length*TASKS.length;
+  const done=groups.reduce((s,g)=>s+countDone(g),0);
+  const avgPts=Math.round(groups.reduce((s,g)=>s+getPoints(g),0)/groups.length);
+  const pct=Math.round((done/total)*100);
+  const advanced=groups.filter(g=>getLevel(getPoints(g)).min>=70).length;
+  const allDone=groups.filter(g=>countDone(g)===TASKS.length).length;
+  document.getElementById('admin-metrics').innerHTML=[
+    {val:pct+'%',lbl:'Progreso'},{val:done,lbl:'Misiones OK'},
+    {val:avgPts,lbl:'Pts medios'},{val:advanced,lbl:'Avanzados'},
+    {val:allDone,lbl:'Listos'},{val:groups.length,lbl:'Equipos'},
+  ].map(m=>`<div class="metric-card"><div class="metric-val">${m.val}</div><div class="metric-lbl">${m.lbl}</div></div>`).join('');
+  const sorted=[...groups].sort((a,b)=>getPoints(b)-getPoints(a));
+  document.getElementById('admin-insights').innerHTML=`
+    <div class="insight ic-green"><span>✦</span><div><strong>${sorted[0].name}</strong> lidera con ${getPoints(sorted[0])} pts. ¡Equipo de leyenda!</div></div>
+    <div class="insight ic-amber"><span>⚡</span><div><strong>${sorted[sorted.length-1].name}</strong> necesita impulso esta semana.</div></div>
+    <div class="insight ic-blue"><span>🔮</span><div>${allDone>0?allDone+' equipo(s) listos para la exposición oral.':'Los grupos avanzan. ¡Ánimo a tod@s!'}</div></div>`;
+}
+
+/* ══════════════════════════════════════
+   NAV PRINCIPAL
+══════════════════════════════════════ */
 function showView(name,btn){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
@@ -322,19 +624,25 @@ function showView(name,btn){
   btn?.classList.add('active');
   if(name==='ranking')renderRanking();
   if(name==='migrupo')renderMyGroup();
+  if(name==='admin-grupos'){renderAdminGroups();}
+  if(name==='admin-resumen'){renderAdminResumen();}
 }
 
-/* ── INIT ── */
+/* ══════════════════════════════════════
+   INIT
+══════════════════════════════════════ */
 renderSelector();
-if(selectedGroup) renderMyGroup();
+if(selectedGroup)renderMyGroup();
+if(isAdmin)activateAdminMode();
 
-/* ── AUTO-REFRESH cada 30s por si el docente actualiza datos ── */
+// Auto-refresh cada 30s en vista alumnado
 setInterval(()=>{
-  if(selectedGroup) renderMyGroup();
-  const activeRanking = document.getElementById('view-ranking').classList.contains('active');
-  if(activeRanking) renderRanking();
-  renderSelector();
-}, 30000);
+  if(!isAdmin){
+    if(selectedGroup)renderMyGroup();
+    if(document.getElementById('view-ranking').classList.contains('active'))renderRanking();
+    renderSelector();
+  }
+},30000);
 </script>
 </body>
 </html>
