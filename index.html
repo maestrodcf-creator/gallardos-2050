@@ -49,9 +49,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .hero-border{max-width:700px;margin:0 auto;border:1.5px solid rgba(244,185,66,0.22);border-radius:18px;padding:2rem 1.5rem 1.5rem;background:linear-gradient(135deg,rgba(22,33,62,0.92),rgba(15,52,96,0.7),rgba(22,33,62,0.92));box-shadow:0 0 40px rgba(56,198,244,0.08),inset 0 1px 0 rgba(244,185,66,0.12);position:relative;}
 .hero-border::before{content:'✦';position:absolute;top:-11px;left:50%;transform:translateX(-50%);color:var(--gold);font-size:1.1rem;background:var(--stone);padding:0 8px;}
 
-/* Botón docente — esquina superior derecha del hero-border */
-.teacher-btn{position:absolute;top:10px;right:14px;font-size:0.7rem;font-family:var(--font-title);letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:20px;border:1px solid rgba(244,185,66,0.15);background:rgba(244,185,66,0.04);color:rgba(244,185,66,0.35);cursor:pointer;transition:all 0.25s;z-index:2;}
-.teacher-btn:hover{border-color:rgba(244,185,66,0.35);color:var(--gold);background:rgba(244,185,66,0.08);}
+/* Barra fija inferior — botón docente siempre visible */
+.teacher-bar{position:fixed;bottom:0;left:0;right:0;z-index:500;display:flex;justify-content:center;padding:12px 1rem 16px;background:linear-gradient(0deg,rgba(10,10,20,0.97) 0%,rgba(10,10,20,0) 100%);}
+.teacher-btn{font-size:0.72rem;font-family:var(--font-title);letter-spacing:1.5px;text-transform:uppercase;padding:9px 24px;border-radius:20px;border:1px solid rgba(244,185,66,0.3);background:rgba(22,33,62,0.98);color:rgba(244,185,66,0.55);cursor:pointer;transition:all 0.25s;box-shadow:0 4px 20px rgba(0,0,0,0.6);}
+.teacher-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(244,185,66,0.1);box-shadow:0 4px 24px rgba(244,185,66,0.2);}
+.teacher-btn.admin-active{border-color:var(--gem-purple);color:var(--gem-purple);background:rgba(176,111,232,0.1);}
 
 .logo-wrap{width:80px;height:80px;margin:0 auto 1rem;animation:glow 3s ease-in-out infinite;}
 .logo-wrap img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 18px rgba(56,198,244,0.55)) drop-shadow(0 0 35px rgba(244,185,66,0.35));}
@@ -81,7 +83,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* ══════════════════════════════
    MAIN / VIEWS
 ══════════════════════════════ */
-.main{max-width:860px;margin:0 auto;padding:1.25rem 1.5rem 5rem;position:relative;z-index:1;}
+.main{max-width:860px;margin:0 auto;padding:1.25rem 1.5rem 7rem;position:relative;z-index:1;}
 .view{display:none;}.view.active{display:block;animation:fadeUp 0.35s ease;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
 .section-lbl{font-family:var(--font-title);font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:rgba(244,185,66,0.4);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
@@ -248,7 +250,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <!-- ══ HERO ══ -->
 <header class="hero">
   <div class="hero-border">
-    <button class="teacher-btn" onclick="openModal()" title="Acceso docente">🔑 Docente</button>
     <div class="logo-wrap">
       <img src="El_Secreto_de_las_Gemas-2.png" alt="Logo"
         onerror="this.parentNode.innerHTML='<span style=\'font-size:3rem;display:block;text-align:center\'>🔮</span>'">
@@ -393,6 +394,9 @@ function checkPassword(){
 
 function activateAdminMode(){
   document.getElementById('admin-nav-items').style.display='flex';
+  document.getElementById('teacher-btn').textContent='🔮 Salir modo docente';
+  document.getElementById('teacher-btn').classList.add('admin-active');
+  document.getElementById('teacher-btn').onclick=exitAdmin;
   showView('admin-grupos', document.querySelector('.nav-btn.admin-nav'));
 }
 
@@ -400,6 +404,9 @@ function exitAdmin(){
   isAdmin=false;
   sessionStorage.removeItem('gemas_admin');
   document.getElementById('admin-nav-items').style.display='none';
+  document.getElementById('teacher-btn').textContent='🔑 Acceso Docente';
+  document.getElementById('teacher-btn').classList.remove('admin-active');
+  document.getElementById('teacher-btn').onclick=openModal;
   showView('migrupo', document.querySelector('.nav-btn:first-child'));
 }
 
@@ -644,5 +651,10 @@ setInterval(()=>{
   }
 },30000);
 </script>
+<!-- ══ BARRA DOCENTE FIJA ══ -->
+<div class="teacher-bar" id="teacher-bar">
+  <button class="teacher-btn" id="teacher-btn" onclick="openModal()">🔑 Acceso Docente</button>
+</div>
+
 </body>
 </html>
