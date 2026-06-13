@@ -383,7 +383,7 @@ html{height:-webkit-fill-available;}
 </head>
 <body>
 <div class="sync-bar"><div class="sync-fill" id="sF"></div></div>
-<div class="sync-dot" id="sD">☁️ Conectando...</div>
+<div class="sync-dot" id="sD" style="opacity:0">·</div>
 <div class="offline-bar" id="oB">⚠️ Sin conexión — cambios guardados localmente, se sincronizarán al volver la red</div>
 
 <div class="modal-overlay" id="modal-overlay">
@@ -520,50 +520,30 @@ function done(g){return g.tasks.filter(t=>t.status==='done').length;}
 function load(){try{return JSON.parse(localStorage.getItem(LK))||init();
 
 /* ── MOBILE TOUCH ENHANCEMENTS ── */
-// Prevent double-tap zoom on buttons
-document.addEventListener('touchend', function(e){
-  const t = e.target.closest('button,a,.sel-btn,.group-card,article');
-  if(t){ e.preventDefault(); t.click(); }
-}, {passive:false});
-
-// Fix iOS momentum scrolling on nav
-const navWrap = document.querySelector('.nav-wrap');
-if(navWrap) navWrap.addEventListener('touchmove', function(e){ e.stopPropagation(); }, {passive:true});
-
-// Close modal on backdrop tap (mobile friendly)
-document.getElementById('modal-overlay').addEventListener('touchstart', function(e){
+// Close modal on backdrop tap
+document.getElementById('modal-overlay').addEventListener('click', function(e){
   if(e.target === this) closeModal();
-}, {passive:true});
+});
 
-// Add active states for touch feedback
+// Visual feedback on touch - safe passive listeners only
 document.querySelectorAll('button,.sel-btn,.group-card').forEach(el=>{
-  el.addEventListener('touchstart', ()=>el.style.opacity='0.75', {passive:true});
-  el.addEventListener('touchend', ()=>el.style.opacity='', {passive:true});
-  el.addEventListener('touchcancel', ()=>el.style.opacity='', {passive:true});
+  el.addEventListener('touchstart', ()=>{ el.style.opacity='0.75'; }, {passive:true});
+  el.addEventListener('touchend', ()=>{ el.style.opacity=''; }, {passive:true});
+  el.addEventListener('touchcancel', ()=>{ el.style.opacity=''; }, {passive:true});
 });
 }catch(e){return init();
 
 /* ── MOBILE TOUCH ENHANCEMENTS ── */
-// Prevent double-tap zoom on buttons
-document.addEventListener('touchend', function(e){
-  const t = e.target.closest('button,a,.sel-btn,.group-card,article');
-  if(t){ e.preventDefault(); t.click(); }
-}, {passive:false});
-
-// Fix iOS momentum scrolling on nav
-const navWrap = document.querySelector('.nav-wrap');
-if(navWrap) navWrap.addEventListener('touchmove', function(e){ e.stopPropagation(); }, {passive:true});
-
-// Close modal on backdrop tap (mobile friendly)
-document.getElementById('modal-overlay').addEventListener('touchstart', function(e){
+// Close modal on backdrop tap
+document.getElementById('modal-overlay').addEventListener('click', function(e){
   if(e.target === this) closeModal();
-}, {passive:true});
+});
 
-// Add active states for touch feedback
+// Visual feedback on touch - safe passive listeners only
 document.querySelectorAll('button,.sel-btn,.group-card').forEach(el=>{
-  el.addEventListener('touchstart', ()=>el.style.opacity='0.75', {passive:true});
-  el.addEventListener('touchend', ()=>el.style.opacity='', {passive:true});
-  el.addEventListener('touchcancel', ()=>el.style.opacity='', {passive:true});
+  el.addEventListener('touchstart', ()=>{ el.style.opacity='0.75'; }, {passive:true});
+  el.addEventListener('touchend', ()=>{ el.style.opacity=''; }, {passive:true});
+  el.addEventListener('touchcancel', ()=>{ el.style.opacity=''; }, {passive:true});
 });
 }}
 function init(){const d=GI.map((g,i)=>({...g,accent:AC[i],solid:SC[i],generalNote:'',roles:{coord:'',secre:'',moder:'',porta:''},tasks:TASKS.map(t=>({id:t.id,status:'pending',stars:0,comment:'',canvaUrl:'',rubric:{}}))})));saveL(d);return d;}
@@ -572,7 +552,14 @@ function flashOk(id){const e=document.getElementById(id);if(!e)return;e.style.di
 
 /* SUPABASE SYNC */
 let syncT=null;
-function setSd(t,tx){const d=document.getElementById('sD'),f=document.getElementById('sF');d.textContent=tx;d.className='sync-dot '+(t||'');if(t==='on'){f.style.width='60%';}else if(t==='ok'){f.style.width='100%';setTimeout(()=>{f.style.width='0';d.textContent='☁️ Sincronizado';d.className='sync-dot';},2000);}else{f.style.width='0';}}
+function setSd(t,tx){
+  const d=document.getElementById('sD'),f=document.getElementById('sF');
+  if(!tx){d.style.opacity='0';f.style.width='0';return;}
+  d.textContent=tx;d.className='sync-dot '+(t||'');d.style.opacity='1';
+  if(t==='on'){f.style.width='60%';}
+  else if(t==='ok'){f.style.width='100%';setTimeout(()=>{f.style.width='0';d.style.opacity='0';},2500);}
+  else{f.style.width='0';setTimeout(()=>d.style.opacity='0',3000);}
+}
 async function push(data){
   setSd('on','⟳ Guardando...');
   try{
@@ -581,11 +568,20 @@ async function push(data){
   }catch(e){setSd('err','✗ Sin red');}
 }
 async function pull(){
+  if(!SUPA_URL || !SUPA_KEY) return null;
   try{
-    const r=await fetch(SUPA_URL+'/rest/v1/gemas_state?id=eq.main&select=data',{headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY}});
+    const r=await fetch(SUPA_URL+'/rest/v1/gemas_state?id=eq.main&select=data',{
+      headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY},
+      signal: AbortSignal.timeout(4000)
+    });
+    if(!r.ok) return null;
     const rows=await r.json();
-    if(rows&&rows[0]&&rows[0].data)return JSON.parse(rows[0].data);
-  }catch(e){}
+    if(rows && rows.length > 0 && rows[0].data){
+      const parsed = JSON.parse(rows[0].data);
+      // Validate it's real group data
+      if(Array.isArray(parsed) && parsed.length === 7) return parsed;
+    }
+  }catch(e){ console.warn('Supabase pull failed:', e.message); }
   return null;
 }
 function save(d){saveL(d);clearTimeout(syncT);syncT=setTimeout(()=>push(d),1500);}
@@ -793,37 +789,48 @@ function showView(n,btn){document.querySelectorAll('.view').forEach(v=>v.classLi
 
 /* INIT */
 async function init(){
-  setSd('on','⟳ Cargando...');
-  const cd=await pull();
-  if(cd){saveL(cd);setSd('ok','✓ Sincronizado');}
-  else{setSd('','💾 Local');}
-  renderSel();if(sg)renderMG();if(isA)activateAdmin();
+  // 1. Render immediately from localStorage — no waiting
+  renderSel();
+  if(sg) renderMG();
+  if(isA) activateAdmin();
+  setSd('','💾 Local');
+
+  // 2. Sync Supabase in background — never blocks the UI
+  if(SUPA_URL && SUPA_KEY){
+    setSd('on','⟳ Sincronizando...');
+    try{
+      const cd = await Promise.race([
+        pull(),
+        new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),5000))
+      ]);
+      if(cd && Array.isArray(cd) && cd.length > 0){
+        saveL(cd);
+        setSd('ok','✓ Sincronizado');
+        renderSel();
+        if(sg) renderMG();
+      } else {
+        setSd('','☁️ Local');
+      }
+    } catch(e){
+      setSd('','💾 Local');
+    }
+  }
 }
 setInterval(()=>{if(!isA){if(sg)renderMG();if(document.getElementById('view-rk').classList.contains('active'))renderRK();renderSel();}},30000);
-setInterval(async()=>{const cd=await pull();if(cd){saveL(cd);if(sg)renderMG();}},60000);
+setInterval(async()=>{if(SUPA_URL&&SUPA_KEY){const cd=await pull();if(cd&&cd.length===7){saveL(cd);if(sg)renderMG();renderSel();}}},60000);
 init();
 
 /* ── MOBILE TOUCH ENHANCEMENTS ── */
-// Prevent double-tap zoom on buttons
-document.addEventListener('touchend', function(e){
-  const t = e.target.closest('button,a,.sel-btn,.group-card,article');
-  if(t){ e.preventDefault(); t.click(); }
-}, {passive:false});
-
-// Fix iOS momentum scrolling on nav
-const navWrap = document.querySelector('.nav-wrap');
-if(navWrap) navWrap.addEventListener('touchmove', function(e){ e.stopPropagation(); }, {passive:true});
-
-// Close modal on backdrop tap (mobile friendly)
-document.getElementById('modal-overlay').addEventListener('touchstart', function(e){
+// Close modal on backdrop tap
+document.getElementById('modal-overlay').addEventListener('click', function(e){
   if(e.target === this) closeModal();
-}, {passive:true});
+});
 
-// Add active states for touch feedback
+// Visual feedback on touch - safe passive listeners only
 document.querySelectorAll('button,.sel-btn,.group-card').forEach(el=>{
-  el.addEventListener('touchstart', ()=>el.style.opacity='0.75', {passive:true});
-  el.addEventListener('touchend', ()=>el.style.opacity='', {passive:true});
-  el.addEventListener('touchcancel', ()=>el.style.opacity='', {passive:true});
+  el.addEventListener('touchstart', ()=>{ el.style.opacity='0.75'; }, {passive:true});
+  el.addEventListener('touchend', ()=>{ el.style.opacity=''; }, {passive:true});
+  el.addEventListener('touchcancel', ()=>{ el.style.opacity=''; }, {passive:true});
 });
 
 </script>
