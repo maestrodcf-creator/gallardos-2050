@@ -93,16 +93,16 @@ body::before{
 /* ══════════════════════════════
    HERO
 ══════════════════════════════ */
-.hero{position:relative;z-index:1;text-align:center;padding:2rem 1.5rem 0;}
+.hero{position:relative;z-index:1;text-align:center;padding:1.5rem 1.5rem 0;}
 .hero-border{
   max-width:720px;margin:0 auto;
   border:2px solid var(--gold-light);
   border-radius:22px;
-  padding:0 1.5rem 2rem;
+  padding:1.5rem 1.5rem 2rem;
   background:linear-gradient(160deg,var(--surface) 0%,var(--surface2) 50%,var(--gold-pale) 100%);
   box-shadow:var(--shadow2),inset 0 1px 0 rgba(255,255,255,0.8);
   position:relative;
-  overflow:hidden;
+  overflow:visible;
 }
 /* Franja decorativa superior dorada */
 .hero-border::before{
@@ -111,21 +111,19 @@ body::before{
 }
 /* Ornamento central */
 .hero-border::after{
-  content:'✦';position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+  content:'✦';position:absolute;bottom:-13px;left:50%;transform:translateX(-50%);
   font-size:1.2rem;color:var(--gold);background:var(--bg);padding:0 10px;line-height:1;
 }
 
-/* Logo integrado — grande y prominente */
+/* Logo integrado — dentro del flujo, centrado */
 .logo-hero{
-  width:140px;height:140px;margin:-70px auto 1.25rem;
-  position:relative;z-index:2;
+  width:130px;height:130px;margin:0 auto 1.25rem;
+  display:block;
   animation:float 4s ease-in-out infinite;
-  filter:drop-shadow(0 8px 24px rgba(91,207,239,0.45)) drop-shadow(0 4px 16px rgba(212,136,10,0.35));
+  filter:drop-shadow(0 6px 20px rgba(91,207,239,0.5)) drop-shadow(0 3px 14px rgba(212,136,10,0.4));
 }
-.logo-hero img{width:100%;height:100%;object-fit:contain;}
-
-/* Spacer so hero-border top padding works with negative margin logo */
-.hero-top-space{height:80px;}
+.logo-hero img{width:100%;height:100%;object-fit:contain;display:block;}
+.hero-top-space{display:none;}
 
 .hero-eyebrow{font-family:var(--ft);font-size:0.62rem;letter-spacing:4px;text-transform:uppercase;color:var(--sky);margin-bottom:6px;}
 .hero-title{font-family:var(--fd);font-size:clamp(1.4rem,4vw,2.2rem);font-weight:900;color:var(--gold);line-height:1.15;margin-bottom:4px;text-shadow:0 2px 8px rgba(212,136,10,0.15);}
@@ -331,8 +329,7 @@ body::before{
   .main,.nav-wrap{padding-left:1rem;padding-right:1rem;}
   .rank-bar-wrap{display:none;}
   .hero{padding:2rem 1rem 0;}
-  .logo-hero{width:110px;height:110px;margin:-55px auto 1rem;}
-  .hero-top-space{height:60px;}
+  .logo-hero{width:100px;height:100px;}
 }
 ::-webkit-scrollbar{width:6px;}
 ::-webkit-scrollbar-track{background:var(--bg2);}
@@ -362,7 +359,11 @@ body::before{
 <!-- HERO -->
 <header class="hero">
   <div class="hero-border">
-    <div class="hero-top-space"></div>
+    <!-- Logo dentro del flujo normal -->
+    <div class="logo-hero">
+      <img src="El_Secreto_de_las_Gemas.png" alt="El Secreto de las Gemas"
+        onerror="this.style.display='none';this.parentNode.innerHTML='<div style=\'font-size:5rem;line-height:1;margin-bottom:0.5rem\'>🔮</div>'">
+    </div>
     <p class="hero-eyebrow">Los Gallardos 2050 · 4.º de Primaria</p>
     <h1 class="hero-title">El Secreto de las Gemas</h1>
     <p class="hero-sub">Aprendizaje Cooperativo · Misión Activa</p>
@@ -375,11 +376,6 @@ body::before{
     <div class="selector-lbl">Selecciona tu equipo</div>
     <div class="groups-selector" id="groups-selector"></div>
   </div>
-  <!-- Logo flotante sobre el borde superior del hero-border -->
-  <div class="logo-hero" style="position:absolute;top:0;left:50%;transform:translateX(-50%);">
-    <img src="El_Secreto_de_las_Gemas.png" alt="El Secreto de las Gemas"
-      onerror="this.parentNode.innerHTML='<span style=\'font-size:5rem;display:block;text-align:center;line-height:140px\'>🔮</span>'">
-  </div>
 </header>
 
 <!-- NAV -->
@@ -387,7 +383,7 @@ body::before{
   <div class="nav" id="main-nav">
     <button class="nav-btn active" onclick="showView('migrupo',this)">💎 Mi Grupo</button>
     <button class="nav-btn" onclick="showView('ranking',this)">🏆 Ranking</button>
-    <div id="admin-nav-items" style="display:none;display:flex;gap:4px;align-items:center">
+    <div id="admin-nav-items" style="display:none;gap:4px;align-items:center;flex-wrap:wrap">
       <div class="admin-divider"></div>
       <button class="nav-btn admin-nav" onclick="showView('admin-grupos',this)">⚔️ Evaluar Grupos</button>
       <button class="nav-btn admin-nav" onclick="showView('admin-resumen',this)">🔮 Resumen</button>
